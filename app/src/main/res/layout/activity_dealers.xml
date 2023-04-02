@@ -92,7 +92,8 @@
                     android:scaleX="1.1"
                     android:scaleY="1.05"
                     android:text="DEALERS"
-                    android:textColor="@color/red" />
+                    android:textStyle="bold"
+                    android:textColor="@color/blue" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -108,8 +109,8 @@
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="365dp"
-                    android:layout_marginHorizontal="30dp"
-                    android:paddingHorizontal="20dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:paddingHorizontal="10dp"
 
                     />
 
