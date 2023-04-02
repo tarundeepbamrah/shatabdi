@@ -1,7 +1,9 @@
 package com.example.shatabdi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 public class SalesmanDashboard extends AppCompatActivity {
+
+    AppCompatButton finddealers;
 
     String[] city = {"Delhi","Noida","Meerut"};
     String[] area = {"Gandhi Nagar","Gill Road"};
@@ -22,6 +26,8 @@ public class SalesmanDashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_salesman_dashboard);
+
+        finddealers=findViewById(R.id.finddealers);
 
         autoCompleteTextView=findViewById(R.id.auto_complete_txt_city);
         adapteritem= new ArrayAdapter<String>(this,R.layout.list_item,city);
@@ -40,6 +46,14 @@ public class SalesmanDashboard extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String area=adapterView.getItemAtPosition(i).toString();
+            }
+        });
+
+        finddealers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i= new Intent(SalesmanDashboard.this,Dealers.class);
+                startActivity(i);
             }
         });
 

@@ -16,6 +16,14 @@
 
         <activity
             android:name=".Dealers"
+            android:exported="false" />
+
+        <activity
+            android:name=".SalesmanDashboard"
+            android:exported="false"/>
+
+        <activity
+            android:name=".Signin"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,15 +32,6 @@
             </intent-filter>
         </activity>
 
-
-        <activity
-            android:name=".SalesmanDashboard"
-            android:exported="false"/>
-
-
-        <activity
-            android:name=".Signin"
-            android:exported="false" />
     </application>
 
 </manifest>
