@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".MainActivity">
+    tools:context=".Signin">
 
 
     <ImageView
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="118dp"
         app:srcCompat="@drawable/logo_shatabdi"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="25dp"
         android:layout_marginTop="15dp"
         />
 
@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Please Login to your Account"
+        android:textColor="#80000000"
         android:layout_marginTop="5dp"/>
 
     <EditText
@@ -40,6 +41,7 @@
         android:layout_height="55dp"
         android:background="@drawable/round_back_dark_blue"
         android:hint="Email"
+        android:textColorHint="#676767"
         android:maxLines="1"
         android:inputType="text"
         android:textSize="16sp"
@@ -56,6 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:hint="Password"
+        android:textColorHint="#676767"
         android:maxLines="1"
         android:inputType="textPassword"
         android:textSize="16sp"
@@ -109,6 +112,7 @@
             android:layout_marginStart="5dp"
             android:textStyle="bold"
             android:textSize="12sp"
+            android:textColor="#80000000"
             />
     </LinearLayout>
 
