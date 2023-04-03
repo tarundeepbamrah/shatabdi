@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Conversation extends AppCompatActivity {
-    AppCompatButton sendreport,cancel;
+    AppCompatButton sendreport,cancel,confirm;
     TextView logout;
     EditText confirmconversation;
     @Override
@@ -60,6 +62,7 @@ public class Conversation extends AppCompatActivity {
                 AlertDialog.Builder builder=new AlertDialog.Builder(Conversation.this);
                 View view1 = LayoutInflater.from(Conversation.this).inflate(R.layout.conversationdialog,null);
                 cancel=view1.findViewById(R.id.cancel);
+                confirm=view1.findViewById(R.id.confirm);
                 confirmconversation=view1.findViewById(R.id.confirmconversation);
                 builder.setView(view1);
                 AlertDialog dialog=builder.create();
@@ -73,6 +76,33 @@ public class Conversation extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
+
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog dialog;
+                        AlertDialog.Builder builder= new AlertDialog.Builder(Conversation.this);
+                        View view2 = LayoutInflater.from(Conversation.this).inflate(R.layout.successdialog,null);
+                        builder.setView(view2);
+                        dialog=builder.create();
+                        dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
+                        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                        dialog.setCancelable(true);
+                        dialog.getWindow().setGravity(Gravity.CENTER);
+                        dialog.show();
+                        dialog.getWindow().setLayout(600,400);
+                        Handler handler=new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                                Intent i= new Intent(Conversation.this,SalesmanDashboard.class);
+                                startActivity(new Intent(getApplicationContext(),SalesmanDashboard.class));
+                            }
+                        },2000);
+                    }
+                });
+
             }
         });
     }
