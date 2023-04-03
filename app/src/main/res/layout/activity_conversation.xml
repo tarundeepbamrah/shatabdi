@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white"
+
+
     tools:context=".SalesmanDashboard">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/background"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
 
 
     <ImageView
@@ -23,7 +38,7 @@
         android:layout_marginTop="15dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="15dp"
 
         >
 
@@ -57,6 +72,7 @@
             />
 
         <TextView
+            android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Logout"
@@ -80,71 +96,91 @@
             android:layout_gravity="center_horizontal"
             android:scaleX="1.1"
             android:scaleY="1.05"
-            android:text="ADD DEALER"
+            android:text="VISIT DETAILS"
             android:textStyle="bold"
             android:textColor="@color/blue" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@drawable/round_back_dark_blue"
-            android:hint="Shop Name"
-            android:textColorHint="#676767"
-            android:maxLines="1"
-            android:inputType="text"
-            android:textSize="16sp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="15dp"
-            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Write the Summary of the Conversation \nwith the Dealer below"
+            android:textColor="#80000000"
+            android:layout_marginTop="5dp"/>
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="200dp"
             android:background="@drawable/round_back_dark_blue"
-            android:hint="Dealer Name"
             android:textColorHint="#676767"
-            android:maxLines="1"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:textSize="16sp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
+            android:lines="20"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+            android:scrollHorizontally="false"
+            android:scrollbars="vertical"
+            android:gravity="top"
+            android:padding="15dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@drawable/round_back_dark_blue"
-            android:hint="Phone"
-            android:textColorHint="#676767"
-            android:maxLines="1"
-            android:inputType="phone"
-            android:textSize="16sp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="10dp"
-            />
-
 
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="50dp"
+        android:layout_gravity="center"
+        android:layout_height="50dp"
+        android:background="@drawable/camerabutton"
+        android:textColor="@color/white"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:drawableStart="@drawable/camera"
+        android:padding="12dp"
+        android:textAllCaps="false"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:paddingHorizontal="15dp"
+        >
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I hereby confirm that I have visited the selected Dealer and allow the app to record my current Location and share it with the Manager."
+            android:textSize="12sp"
+            android:textColor="#80000000"
+            />
+
+
+
+</LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/sendreport"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/button_bg"
         android:textColor="@color/white"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="Add Dealer"
+        android:text="Send Report"
         android:textAllCaps="false"
         />
 
-</LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

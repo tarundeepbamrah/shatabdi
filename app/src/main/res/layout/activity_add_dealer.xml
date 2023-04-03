@@ -75,76 +75,77 @@
         android:orientation="vertical"
         >
 
-    <com.google.android.material.textfield.TextInputLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:scaleX="1.1"
+            android:scaleY="1.05"
+            android:text="ADD DEALER"
+            android:textStyle="bold"
+            android:textColor="@color/blue" />
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-
-        android:layout_marginTop="16dp"
-        android:hint="City"
-        android:textColorHint="@color/blue"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
-        app:boxStrokeWidth="0dp"
-        app:boxStrokeWidthFocused="0dp"
-        android:paddingTop="10dp"
-        >
-
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/auto_complete_txt_city"
+        <EditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="55dp"
             android:background="@drawable/round_back_dark_blue"
-            android:inputType="none"
-            android:padding="23dp"
-            android:gravity="bottom"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:textColor="@color/black"
-            android:enabled="false"/>
+            android:hint="Shop Name"
+            android:textColorHint="#676767"
+            android:maxLines="1"
+            android:inputType="text"
+            android:textSize="16sp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="15dp"
+            />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="16dp"
-        android:hint="Area"
-        android:textColorHint="@color/blue"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
-        app:boxStrokeWidth="0dp"
-        app:boxStrokeWidthFocused="0dp"
-        android:paddingTop="10dp"
-        >
-
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/auto_complete_txt_area"
+        <EditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="55dp"
             android:background="@drawable/round_back_dark_blue"
-            android:inputType="none"
-            android:padding="23dp"
-            android:gravity="bottom"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:textColor="@color/black"
-            android:enabled="false"/>
+            android:hint="Dealer Name"
+            android:textColorHint="#676767"
+            android:maxLines="1"
+            android:inputType="text"
+            android:textSize="16sp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/round_back_dark_blue"
+            android:hint="Phone"
+            android:textColorHint="#676767"
+            android:maxLines="1"
+            android:inputType="phone"
+            android:textSize="16sp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            />
 
 
-</LinearLayout>
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/finddealers"
+        android:id="@+id/adddealer"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/button_bg"
         android:textColor="@color/white"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="Find Dealers"
+        android:text="Add Dealer"
         android:textAllCaps="false"
         />
 

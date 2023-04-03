@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        >
+
+
+
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/employee_det"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Visit Details"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.022" />
+
+        <EditText
+            android:id="@+id/confirmconversation"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/round_back_dark_blue"
+            android:textColorHint="#676767"
+            android:inputType="textMultiLine"
+            android:textSize="16sp"
+            android:lines="20"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+            android:scrollHorizontally="false"
+            android:scrollbars="vertical"
+            android:gravity="top"
+            android:padding="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            >
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_bg"
+                android:text="Cancel"
+                android:layout_marginStart="50dp"
+                android:textColor="@color/white"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_bg"
+                android:text="Confirm"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="50dp"
+                android:textColor="@color/white"
+                />
+
+
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

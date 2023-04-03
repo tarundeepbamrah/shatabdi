@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,14 @@ public class AdapterDealers extends RecyclerView.Adapter<AdapterDealers.ViewHold
         holder.dealername.setText(modelList.get(position).getDealerName());
         holder.phone.setText(modelList.get(position).getPhone());
 
+        holder.bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent j = new Intent(context, Conversation.class);
+                context.startActivity(j);
+            }
+        });
+
     }
 
     @Override
@@ -51,12 +60,14 @@ public class AdapterDealers extends RecyclerView.Adapter<AdapterDealers.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         TextView shopname,dealername,phone;
+        LinearLayout bg;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             shopname= itemView.findViewById(R.id.shopname);
             dealername= itemView.findViewById(R.id.dealername);
             phone= itemView.findViewById(R.id.phone);
+            bg=itemView.findViewById(R.id.bg);
 
         }
     }
