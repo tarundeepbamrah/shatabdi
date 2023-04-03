@@ -15,12 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Conversation extends AppCompatActivity {
-
-    AppCompatButton sendreport;
+    AppCompatButton sendreport,cancel;
     TextView logout;
-    AppCompatButton cancel;
     EditText confirmconversation;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,15 +61,12 @@ public class Conversation extends AppCompatActivity {
                 View view1 = LayoutInflater.from(Conversation.this).inflate(R.layout.conversationdialog,null);
                 cancel=view1.findViewById(R.id.cancel);
                 confirmconversation=view1.findViewById(R.id.confirmconversation);
-
                 builder.setView(view1);
                 AlertDialog dialog=builder.create();
-
                 dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
                 dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
                 dialog.setCancelable(false);
                 dialog.show();
-
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -81,11 +75,9 @@ public class Conversation extends AppCompatActivity {
                 });
             }
         });
-
     }
     @Override
     public void onBackPressed(){
-
         Intent i=new Intent(Conversation.this,Dealers.class);
         startActivity(i);
     }

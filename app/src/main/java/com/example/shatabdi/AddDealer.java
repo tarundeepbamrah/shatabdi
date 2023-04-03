@@ -13,16 +13,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class AddDealer extends AppCompatActivity {
-
     AppCompatButton adddealer;
     TextView logout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_add_dealer);
-
         logout=findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,7 +27,6 @@ public class AddDealer extends AppCompatActivity {
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddDealer.this);
                 builder.setCancelable(false);
                 builder.setMessage("Do you want to Logout?");
-
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -44,16 +40,13 @@ public class AddDealer extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-
                 android.app.AlertDialog alert=builder.create();
                 alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
                 alert.getWindow().setLayout(600,400);
                 alert.show();
             }
         });
-
         adddealer=findViewById(R.id.adddealer);
-
         adddealer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,7 +57,6 @@ public class AddDealer extends AppCompatActivity {
     }
     @Override
     public void onBackPressed(){
-
         Intent i=new Intent(AddDealer.this,Dealers.class);
         startActivity(i);
     }

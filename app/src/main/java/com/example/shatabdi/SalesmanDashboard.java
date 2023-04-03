@@ -21,20 +21,14 @@ public class SalesmanDashboard extends AppCompatActivity {
     AppCompatButton finddealers;
     TextView logout;
 
-    String[] city = {"Delhi","Noida","Meerut"};
-    String[] area = {"Gandhi Nagar","Gill Road"};
-
-    AutoCompleteTextView autoCompleteTextView;
-    AutoCompleteTextView autoCompleteTextView2;
-    ArrayAdapter<String> adapteritem;
-    ArrayAdapter<String> adapteritem2;
-
+    String[] city = {"Delhi","Noida","Meerut"},area = {"Gandhi Nagar","Gill Road"};
+    AutoCompleteTextView autoCompleteTextView,autoCompleteTextView2;
+    ArrayAdapter<String> adapteritem,adapteritem2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_salesman_dashboard);
-
         finddealers=findViewById(R.id.finddealers);
         logout=findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +66,6 @@ public class SalesmanDashboard extends AppCompatActivity {
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(SalesmanDashboard.this);
                 builder.setCancelable(false);
                 builder.setMessage("Do you want to Logout?");
-
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -86,12 +79,10 @@ public class SalesmanDashboard extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-
                 android.app.AlertDialog alert=builder.create();
                 alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
                 alert.getWindow().setLayout(600,400);
                 alert.show();
-
             }
         });
 
@@ -114,14 +105,12 @@ public class SalesmanDashboard extends AppCompatActivity {
                 String area=adapterView.getItemAtPosition(i).toString();
             }
         });
-
         finddealers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i= new Intent(SalesmanDashboard.this,Dealers.class);
                 getWindow().getAttributes().windowAnimations=R.style.animation;
                 startActivity(i);
-
             }
         });
 
@@ -131,12 +120,10 @@ public class SalesmanDashboard extends AppCompatActivity {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setMessage("Do you want to Logout and Exit?");
-
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finishAffinity();
-
             }
         });
         builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -145,7 +132,6 @@ public class SalesmanDashboard extends AppCompatActivity {
                 dialog.cancel();
             }
         });
-
         android.app.AlertDialog alert=builder.create();
         alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
         alert.getWindow().setLayout(600,400);
