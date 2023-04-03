@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +15,6 @@ import android.widget.Adapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +35,7 @@ public class Dealers extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_dealers);
 
         addbutton=findViewById(R.id.addbutton);
@@ -52,34 +53,28 @@ public class Dealers extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatButton cancel,yes;
-                LinearLayout exit=findViewById(R.id.exit);
-                AlertDialog.Builder builder=new AlertDialog.Builder(Dealers.this);
-                View view1 = LayoutInflater.from(Dealers.this).inflate(R.layout.confirmexit,exit);
-                cancel=view1.findViewById(R.id.cancel);
-                yes=view1.findViewById(R.id.yes);
-                builder.setView(view1);
-                AlertDialog dialog=builder.create();
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Dealers.this);
+                builder.setCancelable(false);
+                builder.setMessage("Do you want to Logout?");
 
-                dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
-                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                dialog.setCancelable(false);
-                dialog.show();
-                dialog.getWindow().setLayout(700,400);
-
-                cancel.setOnClickListener(new View.OnClickListener() {
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-                yes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                    public void onClick(DialogInterface dialog, int which) {
                         Intent i= new Intent(Dealers.this,Signin.class);
                         startActivity(i);
                     }
                 });
+                builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                android.app.AlertDialog alert=builder.create();
+                alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                alert.getWindow().setLayout(600,400);
+                alert.show();
             }
         });
 

@@ -40,6 +40,7 @@
             android:background="@drawable/round_back_dark_blue"
             android:textColorHint="#676767"
             android:inputType="textMultiLine"
+            android:focusable="false"
             android:textSize="16sp"
             android:lines="20"
             android:overScrollMode="always"

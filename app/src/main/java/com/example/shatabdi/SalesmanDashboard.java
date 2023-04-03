@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +15,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 public class SalesmanDashboard extends AppCompatActivity {
 
@@ -32,6 +32,7 @@ public class SalesmanDashboard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_salesman_dashboard);
 
         finddealers=findViewById(R.id.finddealers);
@@ -39,7 +40,7 @@ public class SalesmanDashboard extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatButton cancel,yes;
+                /*AppCompatButton cancel,yes;
                 LinearLayout exit=findViewById(R.id.exit);
                 AlertDialog.Builder builder=new AlertDialog.Builder(SalesmanDashboard.this);
                 View view1 = LayoutInflater.from(SalesmanDashboard.this).inflate(R.layout.confirmexit,exit);
@@ -66,7 +67,30 @@ public class SalesmanDashboard extends AppCompatActivity {
                         Intent i= new Intent(SalesmanDashboard.this,Signin.class);
                         startActivity(i);
                     }
+                });*/
+
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(SalesmanDashboard.this);
+                builder.setCancelable(false);
+                builder.setMessage("Do you want to Logout?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i= new Intent(SalesmanDashboard.this,Signin.class);
+                        startActivity(i);
+                    }
                 });
+                builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                android.app.AlertDialog alert=builder.create();
+                alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                alert.getWindow().setLayout(600,400);
+                alert.show();
 
             }
         });
@@ -104,5 +128,27 @@ public class SalesmanDashboard extends AppCompatActivity {
     }
     @Override
     public void onBackPressed(){
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to Logout and Exit?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+
+            }
+        });
+        builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        android.app.AlertDialog alert=builder.create();
+        alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+        alert.getWindow().setLayout(600,400);
+        alert.show();
     }
 }
