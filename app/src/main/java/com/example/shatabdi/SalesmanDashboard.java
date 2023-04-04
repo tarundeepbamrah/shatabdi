@@ -14,12 +14,16 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SalesmanDashboard extends AppCompatActivity {
 
     AppCompatButton finddealers;
     TextView logout;
+    //private FirebaseAuth mAuth;
 
     String[] city = {"Delhi","Noida","Meerut"},area = {"Gandhi Nagar","Gill Road"};
     AutoCompleteTextView autoCompleteTextView,autoCompleteTextView2;
@@ -69,6 +73,9 @@ public class SalesmanDashboard extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //mAuth = FirebaseAuth.getInstance();
+                        //mAuth.signOut();
+                        //Toast.makeText(SalesmanDashboard.this, "Logged out", Toast.LENGTH_SHORT).show();
                         Intent i= new Intent(SalesmanDashboard.this,Signin.class);
                         startActivity(i);
                     }

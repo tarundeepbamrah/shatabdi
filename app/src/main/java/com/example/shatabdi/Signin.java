@@ -1,5 +1,6 @@
 package com.example.shatabdi;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -12,11 +13,18 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Signin extends AppCompatActivity {
     AppCompatButton login;
+    //private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +33,34 @@ public class Signin extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         login= findViewById(R.id.login);
+        EditText email=findViewById(R.id.mail);
+        EditText pass=findViewById(R.id.password);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String mail=email.getText().toString();
+                String password=pass.getText().toString();
+                /*
+                mAuth = FirebaseAuth.getInstance();
+                mAuth.signInWithEmailAndPassword(mail, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Toast.makeText(Signin.this, "Logged in", Toast.LENGTH_SHORT).show();
+
+
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Toast.makeText(Signin.this,task.getException().getMessage(),
+                                            Toast.LENGTH_SHORT).show();
+
+                                }
+
+                            }
+                        });
+                        */
                 AlertDialog dialog;
                 AlertDialog.Builder builder= new AlertDialog.Builder(Signin.this);
                 View view1 = LayoutInflater.from(Signin.this).inflate(R.layout.loadingdialog,null);
@@ -48,6 +81,7 @@ public class Signin extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(),SalesmanDashboard.class));
                     }
                 },3000);
+
 
             }
         });
