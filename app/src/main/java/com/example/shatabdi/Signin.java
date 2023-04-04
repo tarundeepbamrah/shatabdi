@@ -38,8 +38,19 @@ public class Signin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_main);
-
         login= findViewById(R.id.login);
+        if(!checkPer()){
+            login.setEnabled(false);
+            login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.disabled_button_bg));
+            login.setTextColor(Color.DKGRAY);
+            ActivityCompat.requestPermissions(Signin.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+        }
+        else {
+            login.setEnabled(true);
+            login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.button_bg));
+            login.setTextColor(Color.WHITE);
+        }
+
         EditText email=findViewById(R.id.mail);
         EditText pass=findViewById(R.id.password);
         login.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +127,31 @@ public class Signin extends AppCompatActivity {
         alert.show();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==0){
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED && grantResults[2]==PackageManager.PERMISSION_GRANTED ){
+                Toast.makeText(this, "All Permissions Granted", Toast.LENGTH_SHORT).show();
+                login.setEnabled(true);
+                login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.button_bg));
+                login.setTextColor(Color.WHITE);
 
+            }
+            else{
+                Toast.makeText(this, "Permissions Required", Toast.LENGTH_SHORT).show();
+                login.setEnabled(false);
+                login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.disabled_button_bg));
+                login.setTextColor(Color.DKGRAY);
+            }
+        }
+    }
 
+    public boolean checkPer(){
+        int resultStorage= ActivityCompat.checkSelfPermission(this,READ_EXTERNAL_STORAGE);
+        int resultCam= ActivityCompat.checkSelfPermission(this,CAMERA);
+        int resultLoc= ActivityCompat.checkSelfPermission(this,ACCESS_FINE_LOCATION);
+
+        return resultStorage==PackageManager.PERMISSION_GRANTED && resultCam==PackageManager.PERMISSION_GRANTED && resultLoc==PackageManager.PERMISSION_GRANTED;
+    }
 }
