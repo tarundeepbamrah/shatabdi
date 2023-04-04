@@ -1,12 +1,14 @@
 package com.example.shatabdi;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -30,8 +32,26 @@ public class AddDealer extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent i= new Intent(AddDealer.this,Signin.class);
-                        startActivity(i);
+                        android.app.AlertDialog dialog1;
+                        android.app.AlertDialog.Builder builder1= new AlertDialog.Builder(AddDealer.this);
+                        View view1 = LayoutInflater.from(AddDealer.this).inflate(R.layout.loadingdialog,null);
+                        builder1.setView(view1);
+                        dialog1=builder1.create();
+                        dialog1.getWindow().getAttributes().windowAnimations=R.style.animation;
+                        dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                        dialog1.setCancelable(false);
+                        dialog1.getWindow().setGravity(Gravity.CENTER);
+                        dialog1.show();
+                        dialog1.getWindow().setLayout(600,400);
+                        Handler handler=new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog1.dismiss();
+                                Intent i= new Intent(AddDealer.this,Signin.class);
+                                startActivity(i);
+                            }
+                        },3000);
                     }
                 });
                 builder.setNegativeButton("No",new DialogInterface.OnClickListener() {

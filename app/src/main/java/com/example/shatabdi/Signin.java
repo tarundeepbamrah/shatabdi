@@ -78,7 +78,7 @@ public class Signin extends AppCompatActivity {
                     public void run() {
                         dialog.dismiss();
                         Intent i= new Intent(Signin.this,SalesmanDashboard.class);
-                        startActivity(new Intent(getApplicationContext(),SalesmanDashboard.class));
+                        startActivity(i);
                     }
                 },3000);
 
