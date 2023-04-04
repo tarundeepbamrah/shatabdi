@@ -1,13 +1,20 @@
 package com.example.shatabdi;
 
+import static android.Manifest.permission.*;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -108,4 +115,7 @@ public class Signin extends AppCompatActivity {
         alert.getWindow().setLayout(600,400);
         alert.show();
     }
+
+
+
 }
