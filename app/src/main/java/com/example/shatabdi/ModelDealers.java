@@ -1,36 +1,64 @@
 package com.example.shatabdi;
 
 public class ModelDealers {
-    String ShopName,DealerName,Phone;
+    int id;
+    String city,area,dealer,dealer_name,phone;
 
-    public ModelDealers(String ShopName,String DealerName, String Phone) {
-        this.ShopName = ShopName;
-        this.DealerName = DealerName;
-        this.Phone = Phone;
+    public ModelDealers(int id, String city, String area, String dealer, String dealer_name, String phone) {
+        this.id = id;
+        this.city = city;
+        this.area = area;
+        this.dealer = dealer;
+        this.dealer_name = dealer_name;
+        this.phone = phone;
     }
 
-    public String getShopName() {
-        return ShopName;
+    public String getDealer() {
+        return dealer;
     }
 
-    public void setShopName(String ShopName) {
-        this.ShopName = ShopName;
+    public void setDealer(String dealer) {
+        this.dealer = dealer;
     }
 
-    public String getDealerName() {
-        return DealerName;
+    public String getDealer_name() {
+        return dealer_name;
     }
 
-    public void setDealerName(String DealerName) {
-        this.DealerName = DealerName;
+    public void setDealer_name(String dealer_name) {
+        this.dealer_name = dealer_name;
     }
 
     public String getPhone() {
-        return Phone;
+        return phone;
     }
 
-    public void setPhone(String Phone) {
-        this.Phone = Phone;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public ModelDealers() {

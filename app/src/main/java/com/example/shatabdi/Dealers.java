@@ -10,40 +10,48 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class Dealers extends AppCompatActivity {
     AppCompatButton addbutton;
     TextView logout;
     RecyclerView recyclerView;
     AdapterDealers adapter;
-    ModelDealers model1 = new ModelDealers("Tarundeep","Parminder","7617613888");
-    ModelDealers model2 = new ModelDealers("Devendra","Satvinder","7617613888");
-    ModelDealers model3 = new ModelDealers("Ayush","Gagan","7617613888");
+
+    ModelDealers model1 = new ModelDealers(1,"Delhi","GT","Tarundeep","Parminder","7617613888");
+    ModelDealers model2 = new ModelDealers(2,"Rupc","ML","Devendra","Satvinder","7617613888");
+    ModelDealers model3 = new ModelDealers(3,"Bazpur","CP","Ayush","Gagan","7617613888");
     List<ModelDealers> modellist = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_dealers);
-        addbutton=findViewById(R.id.addbutton);
+        addbutton = findViewById(R.id.addbutton);
         addbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(Dealers.this,AddDealer.class);
+                Intent i = new Intent(Dealers.this, AddDealer.class);
                 startActivity(i);
             }
         });
-        logout=findViewById(R.id.logout);
+        logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,36 +62,36 @@ public class Dealers extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         AlertDialog dialog1;
-                        AlertDialog.Builder builder1= new AlertDialog.Builder(Dealers.this);
-                        View view1 = LayoutInflater.from(Dealers.this).inflate(R.layout.loadingdialog,null);
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(Dealers.this);
+                        View view1 = LayoutInflater.from(Dealers.this).inflate(R.layout.loadingdialog, null);
                         builder1.setView(view1);
-                        dialog1=builder1.create();
-                        dialog1.getWindow().getAttributes().windowAnimations=R.style.animation;
+                        dialog1 = builder1.create();
+                        dialog1.getWindow().getAttributes().windowAnimations = R.style.animation;
                         dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
                         dialog1.setCancelable(false);
                         dialog1.getWindow().setGravity(Gravity.CENTER);
                         dialog1.show();
-                        dialog1.getWindow().setLayout(600,400);
-                        Handler handler=new Handler();
+                        dialog1.getWindow().setLayout(600, 400);
+                        Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 dialog1.dismiss();
-                                Intent i= new Intent(Dealers.this,Signin.class);
+                                Intent i = new Intent(Dealers.this, Signin.class);
                                 startActivity(i);
                             }
-                        },3000);
+                        }, 3000);
                     }
                 });
-                builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
-                android.app.AlertDialog alert=builder.create();
+                android.app.AlertDialog alert = builder.create();
                 alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                alert.getWindow().setLayout(600,400);
+                alert.getWindow().setLayout(600, 400);
                 alert.show();
             }
         });
@@ -92,21 +100,22 @@ public class Dealers extends AppCompatActivity {
         modellist.add(model3);
         modellist.add(model1);
         modellist.add(model2);
-        initialization();
+        recyclerView = findViewById(R.id.recycler_view);
         setadapter(modellist);
     }
-    private void initialization(){
-        recyclerView = findViewById(R.id.recycler_view);
-    }
-    private void setadapter(List<ModelDealers> model){
-        adapter= new AdapterDealers(Dealers.this,model);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(Dealers.this );
+
+
+    private void setadapter(List<ModelDealers> model) {
+        adapter = new AdapterDealers(Dealers.this, model);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Dealers.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
     }
+
+
     @Override
-    public void onBackPressed(){
-        Intent i=new Intent(Dealers.this,SalesmanDashboard.class);
+    public void onBackPressed() {
+        Intent i = new Intent(Dealers.this, SalesmanDashboard.class);
         startActivity(i);
     }
 }

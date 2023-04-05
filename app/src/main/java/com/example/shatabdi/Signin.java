@@ -32,7 +32,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Signin extends AppCompatActivity {
     AppCompatButton login;
     //private FirebaseAuth mAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +72,6 @@ public class Signin extends AppCompatActivity {
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(Signin.this,task.getException().getMessage(),
                                             Toast.LENGTH_SHORT).show();
-
                                 }
 
                             }
@@ -99,7 +97,6 @@ public class Signin extends AppCompatActivity {
                         startActivity(i);
                     }
                 },3000);
-
 
             }
         });

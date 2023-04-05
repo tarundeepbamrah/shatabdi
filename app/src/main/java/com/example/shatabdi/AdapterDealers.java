@@ -19,6 +19,8 @@ import java.util.List;
 public class AdapterDealers extends RecyclerView.Adapter<AdapterDealers.ViewHolder> {
     Context context;
     List<ModelDealers> modelList;
+
+
     public AdapterDealers(Context context, List<ModelDealers> modelList) {
         this.context = context;
         this.modelList = modelList;
@@ -32,8 +34,8 @@ public class AdapterDealers extends RecyclerView.Adapter<AdapterDealers.ViewHold
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.shopname.setText(String.valueOf(modelList.get(position).getShopName()));
-        holder.dealername.setText(modelList.get(position).getDealerName());
+        holder.shopname.setText(String.valueOf(modelList.get(position).getDealer()));
+        holder.dealername.setText(modelList.get(position).getDealer_name());
         holder.phone.setText(modelList.get(position).getPhone());
         holder.bg.setOnClickListener(new View.OnClickListener() {
             @Override
