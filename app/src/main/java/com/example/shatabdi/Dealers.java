@@ -31,13 +31,14 @@ import retrofit2.Retrofit;
 public class Dealers extends AppCompatActivity {
     AppCompatButton addbutton;
     TextView logout;
+    ApiInterface apiInterface;
     RecyclerView recyclerView;
     AdapterDealers adapter;
 
-    ModelDealers model1 = new ModelDealers(1,"Delhi","GT","Tarundeep","Parminder","7617613888");
-    ModelDealers model2 = new ModelDealers(2,"Rupc","ML","Devendra","Satvinder","7617613888");
-    ModelDealers model3 = new ModelDealers(3,"Bazpur","CP","Ayush","Gagan","7617613888");
-    List<ModelDealers> modellist = new ArrayList<>();
+    //ModelDealers model1 = new ModelDealers(1,"Delhi","GT","Tarundeep","Parminder","7617613888");
+    //ModelDealers model2 = new ModelDealers(2,"Rupc","ML","Devendra","Satvinder","7617613888");
+    //ModelDealers model3 = new ModelDealers(3,"Bazpur","CP","Ayush","Gagan","7617613888");
+    //List<ModelDealers> modellist = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,13 +96,21 @@ public class Dealers extends AppCompatActivity {
                 alert.show();
             }
         });
-        modellist.add(model1);
-        modellist.add(model2);
-        modellist.add(model3);
-        modellist.add(model1);
-        modellist.add(model2);
+        //modellist.add(model1);
+        //modellist.add(model2);
+        //modellist.add(model3);
+        //modellist.add(model1);
+        //modellist.add(model2);
+
+        //setadapter(modellist);
+        initialization();
+        getresult();
+    }
+
+    private void initialization() {
         recyclerView = findViewById(R.id.recycler_view);
-        setadapter(modellist);
+        Retrofit retrofit= ApiClient.getclient();
+        apiInterface =retrofit.create(ApiInterface.class);
     }
 
 
@@ -110,6 +119,37 @@ public class Dealers extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Dealers.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void getresult()
+    {
+        apiInterface.getData().enqueue(new Callback<GetResponse>() {
+            @Override
+            public void onResponse(Call<GetResponse> call, Response<GetResponse> response) {
+                try{
+                    if(response!=null){
+
+                        if(response.body().getStatus().equals("1")){
+                            setadapter(response.body().getData());
+
+                        }
+                        else{
+                            Toast.makeText(Dealers.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                catch(Exception e){
+                    Log.e("Exception",e.getLocalizedMessage());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GetResponse> call, Throwable t) {
+                Log.e("Failure",t.getLocalizedMessage());
+
+            }
+        });
     }
 
 

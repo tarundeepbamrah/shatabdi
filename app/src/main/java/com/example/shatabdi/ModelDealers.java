@@ -13,6 +13,11 @@ public class ModelDealers {
         this.phone = phone;
     }
 
+    public ModelDealers(String city, String area) {
+        this.city = city;
+        this.area = area;
+    }
+
     public String getDealer() {
         return dealer;
     }

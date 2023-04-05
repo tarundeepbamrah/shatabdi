@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +21,25 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 
 public class SalesmanDashboard extends AppCompatActivity {
 
     AppCompatButton finddealers;
+    ApiInterface apiInterface;
     TextView logout;
     //private FirebaseAuth mAuth;
 
-    String[] city = {"Delhi","Noida","Meerut"},area = {"Gandhi Nagar","Gill Road"};
+    //String[] city = {"Delhi","Noida","Meerut"},area = {"Gandhi Nagar","Gill Road"};
+    String city[] = {};
+    String area[] = {};
     AutoCompleteTextView autoCompleteTextView,autoCompleteTextView2;
     ArrayAdapter<String> adapteritem,adapteritem2;
     @Override
@@ -78,7 +90,6 @@ public class SalesmanDashboard extends AppCompatActivity {
                         //mAuth = FirebaseAuth.getInstance();
                         //mAuth.signOut();
                         //Toast.makeText(SalesmanDashboard.this, "Logged out", Toast.LENGTH_SHORT).show();
-
                         AlertDialog dialog1;
                         AlertDialog.Builder builder1= new AlertDialog.Builder(SalesmanDashboard.this);
                         View view1 = LayoutInflater.from(SalesmanDashboard.this).inflate(R.layout.loadingdialog,null);
@@ -143,6 +154,8 @@ public class SalesmanDashboard extends AppCompatActivity {
         });
 
     }
+
+
     @Override
     public void onBackPressed(){
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
