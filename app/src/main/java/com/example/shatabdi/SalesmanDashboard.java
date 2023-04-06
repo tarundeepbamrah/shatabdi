@@ -68,6 +68,13 @@ public class SalesmanDashboard extends AppCompatActivity {
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.show();
         dialog.getWindow().setLayout(600,400);
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+            }
+        },10000);
 
         finddealers=findViewById(R.id.finddealers);
         logout=findViewById(R.id.logout);
@@ -177,9 +184,6 @@ public class SalesmanDashboard extends AppCompatActivity {
                             for(int i=0;i<response.body().getData().size();i++){
                                 ListCity.add(response.body().getData().get(i).getCity());
                             }
-
-                            //Toast.makeText(SalesmanDashboard.this, List.get(0), Toast.LENGTH_SHORT).show();
-                            //Toast.makeText(SalesmanDashboard.this, List.get(1), Toast.LENGTH_SHORT).show();
 
                             autoCompleteTextView=findViewById(R.id.auto_complete_txt_city);
                             adapteritem= new ArrayAdapter<String>(SalesmanDashboard.this,R.layout.list_item,ListCity);

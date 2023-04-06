@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Signin extends AppCompatActivity {
     AppCompatButton login;
+
     //private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

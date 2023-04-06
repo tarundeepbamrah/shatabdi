@@ -56,6 +56,13 @@ public class Dealers extends AppCompatActivity {
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.show();
         dialog.getWindow().setLayout(600,400);
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+            }
+        },10000);
 
         addbutton = findViewById(R.id.addbutton);
         addbutton.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +135,7 @@ public class Dealers extends AppCompatActivity {
 
 
     private void setadapter(List<ModelDealers> model) {
-        adapter = new AdapterDealers(Dealers.this, model);
+        adapter = new AdapterDealers(Dealers.this, model,"Delhi","Noida");
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Dealers.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
