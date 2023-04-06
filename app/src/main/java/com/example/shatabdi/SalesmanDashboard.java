@@ -2,6 +2,9 @@ package com.example.shatabdi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,12 +19,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,20 +43,38 @@ public class SalesmanDashboard extends AppCompatActivity {
     AppCompatButton finddealers;
     ApiInterface apiInterface;
     TextView logout;
-    //private FirebaseAuth mAuth;
-
-    //String[] city = {"Delhi","Noida","Meerut"},area = {"Gandhi Nagar","Gill Road"};
-    String city[] = {};
-    String area[] = {};
+    //String[] area = {"Gandhi Nagar","Gill Road"},city = {};
+    //String city[] = new String[20];
+    //String[] area = new String[20];
     AutoCompleteTextView autoCompleteTextView,autoCompleteTextView2;
+    List<String> ListCity=  new ArrayList<String>();
+    List<String> ListArea=  new ArrayList<String>();
     ArrayAdapter<String> adapteritem,adapteritem2;
+    AlertDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_salesman_dashboard);
+
+        AlertDialog.Builder builder= new AlertDialog.Builder(SalesmanDashboard.this);
+        View view1 = LayoutInflater.from(SalesmanDashboard.this).inflate(R.layout.loadingdialog,null);
+        builder.setView(view1);
+        dialog=builder.create();
+        dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
+        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+        dialog.setCancelable(false);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.show();
+        dialog.getWindow().setLayout(600,400);
+
         finddealers=findViewById(R.id.finddealers);
         logout=findViewById(R.id.logout);
+
+        initialization();
+        getresult();
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,25 +151,6 @@ public class SalesmanDashboard extends AppCompatActivity {
             }
         });
 
-        autoCompleteTextView=findViewById(R.id.auto_complete_txt_city);
-        adapteritem= new ArrayAdapter<String>(this,R.layout.list_item,city);
-        autoCompleteTextView.setAdapter(adapteritem);
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String city=adapterView.getItemAtPosition(i).toString();
-            }
-        });
-
-        autoCompleteTextView2=findViewById(R.id.auto_complete_txt_area);
-        adapteritem2= new ArrayAdapter<String>(this,R.layout.list_item,area);
-        autoCompleteTextView2.setAdapter(adapteritem2);
-        autoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String area=adapterView.getItemAtPosition(i).toString();
-            }
-        });
         finddealers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,7 +161,97 @@ public class SalesmanDashboard extends AppCompatActivity {
         });
 
     }
+    private void initialization() {
+        Retrofit retrofit= ApiClient.getclient();
+        apiInterface =retrofit.create(ApiInterface.class);
+    }
 
+    private void getresult() {
+        apiInterface.getCityData().enqueue(new Callback<GetStringResponse>() {
+            @Override
+            public void onResponse(Call<GetStringResponse> call, Response<GetStringResponse> response) {
+                try{
+                    if(response!=null){
+                        if(response.body().getStatus().equals("1")){
+
+                            for(int i=0;i<response.body().getData().size();i++){
+                                ListCity.add(response.body().getData().get(i).getCity());
+                            }
+
+                            //Toast.makeText(SalesmanDashboard.this, List.get(0), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(SalesmanDashboard.this, List.get(1), Toast.LENGTH_SHORT).show();
+
+                            autoCompleteTextView=findViewById(R.id.auto_complete_txt_city);
+                            adapteritem= new ArrayAdapter<String>(SalesmanDashboard.this,R.layout.list_item,ListCity);
+                            autoCompleteTextView.setAdapter(adapteritem);
+                            autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    String city=adapterView.getItemAtPosition(i).toString();
+                                }
+                            });
+
+                        }
+                        else{
+                            Toast.makeText(SalesmanDashboard.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                catch(Exception e){
+                    Log.e("Exception",e.getLocalizedMessage());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GetStringResponse> call, Throwable t) {
+                Log.e("Failure",t.getLocalizedMessage());
+
+            }
+        });
+
+        apiInterface.getAreaData().enqueue(new Callback<GetAreaResponse>() {
+            @Override
+            public void onResponse(Call<GetAreaResponse> call, Response<GetAreaResponse> response) {
+                try{
+                    if(response!=null){
+                        if(response.body().getStatus().equals("1")){
+
+                            for(int i=0;i<response.body().getData().size();i++){
+                                ListArea.add(response.body().getData().get(i).getArea());
+                            }
+
+                            dialog.dismiss();
+                            //Toast.makeText(SalesmanDashboard.this, List.get(0), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(SalesmanDashboard.this, List.get(1), Toast.LENGTH_SHORT).show();
+
+                            autoCompleteTextView2=findViewById(R.id.auto_complete_txt_area);
+                            adapteritem2= new ArrayAdapter<String>(SalesmanDashboard.this,R.layout.list_item,ListArea);
+                            autoCompleteTextView2.setAdapter(adapteritem2);
+                            autoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    String area=adapterView.getItemAtPosition(i).toString();
+                                }
+                            });
+
+                        }
+                        else{
+                            Toast.makeText(SalesmanDashboard.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                catch(Exception e){
+                    Log.e("Exception",e.getLocalizedMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetAreaResponse> call, Throwable t) {
+                Log.e("Failure",t.getLocalizedMessage());
+            }
+        });
+    }
 
     @Override
     public void onBackPressed(){

@@ -13,9 +13,8 @@ public class ModelDealers {
         this.phone = phone;
     }
 
-    public ModelDealers(String city, String area) {
+    public ModelDealers(String city) {
         this.city = city;
-        this.area = area;
     }
 
     public String getDealer() {

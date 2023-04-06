@@ -34,6 +34,7 @@ public class Dealers extends AppCompatActivity {
     ApiInterface apiInterface;
     RecyclerView recyclerView;
     AdapterDealers adapter;
+    AlertDialog dialog;
 
     //ModelDealers model1 = new ModelDealers(1,"Delhi","GT","Tarundeep","Parminder","7617613888");
     //ModelDealers model2 = new ModelDealers(2,"Rupc","ML","Devendra","Satvinder","7617613888");
@@ -44,6 +45,18 @@ public class Dealers extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_dealers);
+
+        AlertDialog.Builder builder= new AlertDialog.Builder(Dealers.this);
+        View view1 = LayoutInflater.from(Dealers.this).inflate(R.layout.loadingdialog,null);
+        builder.setView(view1);
+        dialog=builder.create();
+        dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
+        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+        dialog.setCancelable(false);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.show();
+        dialog.getWindow().setLayout(600,400);
+
         addbutton = findViewById(R.id.addbutton);
         addbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +144,7 @@ public class Dealers extends AppCompatActivity {
 
                         if(response.body().getStatus().equals("1")){
                             setadapter(response.body().getData());
+                            dialog.dismiss();
 
                         }
                         else{
