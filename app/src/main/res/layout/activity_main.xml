@@ -84,15 +84,16 @@
         />
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="25dp"
-        android:orientation="horizontal"
         android:gravity="center"
+
+        android:orientation="horizontal"
+
 
         >
 
@@ -101,19 +102,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Forgot Password? Contact"
-            android:textSize="12sp"
             android:textColor="#80000000"
-            />
+            android:textSize="12sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SHATABDI"
             android:layout_marginStart="5dp"
-            android:textStyle="bold"
-            android:textSize="12sp"
+            android:text="SHATABDI"
             android:textColor="#80000000"
-            />
+            android:textSize="12sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 
