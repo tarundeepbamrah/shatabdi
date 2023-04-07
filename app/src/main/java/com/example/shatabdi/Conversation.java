@@ -57,6 +57,8 @@ public class Conversation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_conversation);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
         attendence=findViewById(R.id.attendence);
         sendreport= findViewById(R.id.sendreport);
         sendreport.setEnabled(false);

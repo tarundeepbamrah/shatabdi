@@ -2,6 +2,7 @@ package com.example.shatabdi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +31,7 @@ import retrofit2.Retrofit;
 
 public class Dealers extends AppCompatActivity {
     AppCompatButton addbutton;
-    TextView logout;
+    TextView logout,nodealers;
     ApiInterface apiInterface;
     RecyclerView recyclerView;
     AdapterDealers adapter;
@@ -41,6 +42,8 @@ public class Dealers extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_dealers);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
 
         AlertDialog.Builder builder= new AlertDialog.Builder(Dealers.this);
         View view1 = LayoutInflater.from(Dealers.this).inflate(R.layout.loadingdialog,null);
@@ -68,6 +71,7 @@ public class Dealers extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        nodealers=findViewById(R.id.nodealers);
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +149,8 @@ public class Dealers extends AppCompatActivity {
 
                         }
                         else{
-                            Toast.makeText(Dealers.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            nodealers.setText("No Dealers");
+                            //Toast.makeText(Dealers.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

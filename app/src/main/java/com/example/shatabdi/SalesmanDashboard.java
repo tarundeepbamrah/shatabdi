@@ -2,6 +2,7 @@ package com.example.shatabdi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,6 +58,8 @@ public class SalesmanDashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_salesman_dashboard);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
 
         AlertDialog.Builder builder= new AlertDialog.Builder(SalesmanDashboard.this);
         View view1 = LayoutInflater.from(SalesmanDashboard.this).inflate(R.layout.loadingdialog,null);
