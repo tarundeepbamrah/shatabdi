@@ -40,6 +40,9 @@ public class AdapterDealers extends RecyclerView.Adapter<AdapterDealers.ViewHold
                 @Override
                 public void onClick(View view) {
                     Intent j = new Intent(context, Conversation.class);
+                    j.putExtra("id",modelList.get(position).getId());
+                    j.putExtra("city",modelList.get(position).getCity());
+                    j.putExtra("area",modelList.get(position).getArea());
                     context.startActivity(j);
                 }
             });

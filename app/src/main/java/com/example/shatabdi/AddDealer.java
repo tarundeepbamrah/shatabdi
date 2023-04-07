@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,8 @@ import retrofit2.Retrofit;
 public class AddDealer extends AppCompatActivity {
     AppCompatButton adddealer;
     ApiInterface apiInterface;
+    String city,area,shopnamestring,dealernamestring,phonestring;
+    EditText shopname,dealername,phone;
     TextView logout;
     AlertDialog dialog;
     @Override
@@ -36,6 +39,11 @@ public class AddDealer extends AppCompatActivity {
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
         logout=findViewById(R.id.logout);
         adddealer=findViewById(R.id.adddealer);
+        shopname=findViewById(R.id.shopname);
+        dealername=findViewById(R.id.dealername);
+        phone=findViewById(R.id.phone);
+        city=getIntent().getExtras().getString("city");
+        area=getIntent().getExtras().getString("area");
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,24 +91,41 @@ public class AddDealer extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 initialization();
-                AlertDialog.Builder builder= new AlertDialog.Builder(AddDealer.this);
-                View view1 = LayoutInflater.from(AddDealer.this).inflate(R.layout.loadingdialog,null);
-                builder.setView(view1);
-                dialog=builder.create();
-                dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
-                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                dialog.setCancelable(false);
-                dialog.getWindow().setGravity(Gravity.CENTER);
-                dialog.show();
-                dialog.getWindow().setLayout(600,400);
-                Handler handler=new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.dismiss();
-                    }
-                },10000);
-                getresult("Delhi","Noida");
+                shopnamestring=shopname.getText().toString();
+                dealernamestring=dealername.getText().toString();
+                phonestring=phone.getText().toString();
+
+                if(shopname.getText().toString().equals("")){
+                    shopname.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(AddDealer.this,R.drawable.required),null);
+                }
+                if(dealername.getText().toString().equals("")){
+                    dealername.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(AddDealer.this,R.drawable.required),null);
+                }
+                if(phone.getText().toString().equals("")){
+                    phone.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(AddDealer.this,R.drawable.required),null);
+                }
+                else{
+                    AlertDialog.Builder builder= new AlertDialog.Builder(AddDealer.this);
+                    View view1 = LayoutInflater.from(AddDealer.this).inflate(R.layout.loadingdialog,null);
+                    builder.setView(view1);
+                    dialog=builder.create();
+                    dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
+                    dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                    dialog.setCancelable(false);
+                    dialog.getWindow().setGravity(Gravity.CENTER);
+                    dialog.show();
+                    dialog.getWindow().setLayout(600,400);
+                    Handler handler=new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialog.dismiss();
+                        }
+                    },10000);
+
+                    getresult(city,area);
+                }
+
             }
         });
     }
@@ -120,18 +145,19 @@ public class AddDealer extends AppCompatActivity {
                         if(response.body().getStatus().equals("1")){
                             int i;
                             for(i=0;i<response.body().getData().size();i++){
-                                if(response.body().getData().get(i).getDealer().equals("nbnb")&&response.body().getData().get(i).getDealer_name().equals("Vidya Furniture")&&response.body().getData().get(i).getPhone().equals("897654322")){
+                                if(response.body().getData().get(i).getDealer().equals(shopnamestring)&&response.body().getData().get(i).getDealer_name().equals(dealernamestring)&&response.body().getData().get(i).getPhone().equals(phonestring)){
                                     Toast.makeText(AddDealer.this, "Dealer already exist", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                     return;
                                 }
                             }
                             if(i==response.body().getData().size()){
-                                getresultadddealer("Delhi","Noida","ayush","Vidya Furniture","897654322");
+                                getresultadddealer(city,area,shopnamestring,dealernamestring,phonestring);
                             }
                         }
                         else{
-                            Toast.makeText(AddDealer.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            getresultadddealer(city,area,shopnamestring,dealernamestring,phonestring);
+                            //Toast.makeText(AddDealer.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -159,6 +185,8 @@ public class AddDealer extends AppCompatActivity {
                             Toast.makeText(AddDealer.this,"Dealer Added", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                             Intent i=new Intent(AddDealer.this,Dealers.class);
+                            i.putExtra("city",city);
+                            i.putExtra("area",area);
                             startActivity(i);
                         }
                         else{
@@ -182,6 +210,8 @@ public class AddDealer extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         Intent i=new Intent(AddDealer.this,Dealers.class);
+        i.putExtra("city",city);
+        i.putExtra("area",area);
         startActivity(i);
     }
 }

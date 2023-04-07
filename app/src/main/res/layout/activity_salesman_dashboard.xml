@@ -100,6 +100,7 @@
             android:inputType="none"
             android:padding="23dp"
             android:gravity="bottom"
+            android:focusable="false"
             tools:ignore="SpeakableTextPresentCheck"
             android:textColor="@color/black"
             android:enabled="false"/>
@@ -127,6 +128,7 @@
             android:background="@drawable/round_back_dark_blue"
             android:inputType="none"
             android:padding="23dp"
+            android:focusable="false"
             android:gravity="bottom"
             tools:ignore="SpeakableTextPresentCheck"
             android:textColor="@color/black"

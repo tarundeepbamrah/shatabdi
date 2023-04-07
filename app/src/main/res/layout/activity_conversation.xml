@@ -110,6 +110,7 @@
             android:layout_marginTop="5dp"/>
 
         <EditText
+            android:id="@+id/conversation"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@drawable/round_back_dark_blue"

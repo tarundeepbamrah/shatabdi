@@ -31,6 +31,7 @@ import retrofit2.Retrofit;
 
 public class Dealers extends AppCompatActivity {
     AppCompatButton addbutton;
+    String city,area;
     TextView logout,nodealers;
     ApiInterface apiInterface;
     RecyclerView recyclerView;
@@ -47,6 +48,8 @@ public class Dealers extends AppCompatActivity {
         addbutton = findViewById(R.id.addbutton);
         nodealers=findViewById(R.id.nodealers);
         logout = findViewById(R.id.logout);
+        city=getIntent().getExtras().getString("city");
+        area=getIntent().getExtras().getString("area");
 
         AlertDialog.Builder builder= new AlertDialog.Builder(Dealers.this);
         View view1 = LayoutInflater.from(Dealers.this).inflate(R.layout.loadingdialog,null);
@@ -70,6 +73,8 @@ public class Dealers extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Dealers.this, AddDealer.class);
+                i.putExtra("city",city);
+                i.putExtra("area",area);
                 startActivity(i);
             }
         });
@@ -119,7 +124,7 @@ public class Dealers extends AppCompatActivity {
         });
 
         initialization();
-        getresult("Delhi","Noida");
+        getresult(city,area);
     }
 
     private void initialization() {
@@ -151,6 +156,7 @@ public class Dealers extends AppCompatActivity {
                         }
                         else{
                             nodealers.setText("No Dealers");
+                            dialog.dismiss();
                             //Toast.makeText(Dealers.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }

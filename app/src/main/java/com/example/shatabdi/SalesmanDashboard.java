@@ -42,6 +42,7 @@ import retrofit2.Retrofit;
 public class SalesmanDashboard extends AppCompatActivity {
 
     AppCompatButton finddealers;
+    String city,area;
     ApiInterface apiInterface;
     TextView logout;
     AutoCompleteTextView autoCompleteTextView,autoCompleteTextView2;
@@ -59,6 +60,8 @@ public class SalesmanDashboard extends AppCompatActivity {
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
         finddealers=findViewById(R.id.finddealers);
         logout=findViewById(R.id.logout);
+        autoCompleteTextView=findViewById(R.id.auto_complete_txt_city);
+        autoCompleteTextView2=findViewById(R.id.auto_complete_txt_area);
 
         AlertDialog.Builder builder= new AlertDialog.Builder(SalesmanDashboard.this);
         View view1 = LayoutInflater.from(SalesmanDashboard.this).inflate(R.layout.loadingdialog,null);
@@ -157,9 +160,19 @@ public class SalesmanDashboard extends AppCompatActivity {
         finddealers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i= new Intent(SalesmanDashboard.this,Dealers.class);
-                getWindow().getAttributes().windowAnimations=R.style.animation;
-                startActivity(i);
+                city=autoCompleteTextView.getText().toString();
+                area=autoCompleteTextView2.getText().toString();
+                if (city.equals("")||area.equals("")){
+                    Toast.makeText(SalesmanDashboard.this, "Select City and Area", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent i= new Intent(SalesmanDashboard.this,Dealers.class);
+                    getWindow().getAttributes().windowAnimations=R.style.animation;
+                    i.putExtra("city",city);
+                    i.putExtra("area",area);
+                    startActivity(i);
+                }
+
             }
         });
 
@@ -181,7 +194,6 @@ public class SalesmanDashboard extends AppCompatActivity {
                                 ListCity.add(response.body().getData().get(i).getCity());
                             }
 
-                            autoCompleteTextView=findViewById(R.id.auto_complete_txt_city);
                             adapteritem= new ArrayAdapter<String>(SalesmanDashboard.this,R.layout.list_item,ListCity);
                             autoCompleteTextView.setAdapter(adapteritem);
                             autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -222,7 +234,6 @@ public class SalesmanDashboard extends AppCompatActivity {
                             }
 
                             dialog.dismiss();
-                            autoCompleteTextView2=findViewById(R.id.auto_complete_txt_area);
                             adapteritem2= new ArrayAdapter<String>(SalesmanDashboard.this,R.layout.list_item,ListArea);
                             autoCompleteTextView2.setAdapter(adapteritem2);
                             autoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {

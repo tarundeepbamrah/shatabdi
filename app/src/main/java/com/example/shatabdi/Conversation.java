@@ -37,6 +37,11 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,7 +51,13 @@ public class Conversation extends AppCompatActivity {
     AppCompatButton sendreport,cancel,confirm;
     CheckBox attendence;
     Boolean checkboxvalue=false;
+    int id;
+    String city,area,lattitude,longitude,date,conversation;
+    Date currentdate= Calendar.getInstance().getTime();
+    SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    String finaldate;
     TextView logout,confirmconversation;
+    EditText conversationsummary;
     FusedLocationProviderClient mFusedLocationClient;
     ApiInterface apiInterface;
     AlertDialog dialog2;
@@ -60,9 +71,15 @@ public class Conversation extends AppCompatActivity {
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
         attendence=findViewById(R.id.attendence);
         sendreport= findViewById(R.id.sendreport);
+        conversationsummary=findViewById(R.id.conversation);
         sendreport.setEnabled(false);
         sendreport.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.disabled_button_bg));
         sendreport.setTextColor(Color.DKGRAY);
+
+        id=getIntent().getExtras().getInt("id");
+        city=getIntent().getExtras().getString("city");
+        area=getIntent().getExtras().getString("area");
+        finaldate=df.format(currentdate);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
@@ -144,7 +161,7 @@ public class Conversation extends AppCompatActivity {
                     cancel = view1.findViewById(R.id.cancel);
                     confirm = view1.findViewById(R.id.confirm);
                     confirmconversation = view1.findViewById(R.id.confirmconversation);
-                    confirmconversation.setText("Hellohfhgfhfhfghffhffdhdfdgxfhfhffhfgfhfhcbcvbcbcbfhhfhgfhgfhgfhfhghhfhgffhfhgfbcb");
+                    confirmconversation.setText(conversationsummary.getText().toString());
                     builder.setView(view1);
                     AlertDialog dialog = builder.create();
                     dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
@@ -162,7 +179,7 @@ public class Conversation extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             initialization();
-
+                            conversation=conversationsummary.getText().toString();
                             AlertDialog.Builder builder2= new AlertDialog.Builder(Conversation.this);
                             View view1 = LayoutInflater.from(Conversation.this).inflate(R.layout.loadingdialog,null);
                             builder2.setView(view1);
@@ -181,7 +198,7 @@ public class Conversation extends AppCompatActivity {
                                 }
                             },10000);
 
-                            getresult(2,"Deepak","Hello","1245","897654322","878675","2015-10-12");
+                            getresult(id,"Deepak",conversation,"1245",lattitude,longitude,finaldate);
 
                             AlertDialog dialog;
                             AlertDialog.Builder builder = new AlertDialog.Builder(Conversation.this);
@@ -225,7 +242,9 @@ public class Conversation extends AppCompatActivity {
                         if (location == null) {
                             requestNewLocationData();
                         } else {
-                            Toast.makeText(Conversation.this, "Latitude: " + location.getLatitude() + " "+"Longitude: "+ location.getLongitude()+" ", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(Conversation.this, "Latitude: " + location.getLatitude() + " "+"Longitude: "+ location.getLongitude()+" ", Toast.LENGTH_SHORT).show();
+                            lattitude=String.valueOf(location.getLatitude());
+                            longitude=String.valueOf(location.getLongitude());
                             //latitudeTextView.setText(location.getLatitude() + "");
                             //longitTextView.setText(location.getLongitude() + "");
                         }
@@ -258,7 +277,9 @@ public class Conversation extends AppCompatActivity {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            Toast.makeText(Conversation.this, "Latitude: " + mLastLocation.getLatitude() + " "+"Longitude: "+ mLastLocation.getLongitude()+" ", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(Conversation.this, "Latitude: " + mLastLocation.getLatitude() + " "+"Longitude: "+ mLastLocation.getLongitude()+" ", Toast.LENGTH_SHORT).show();
+            lattitude=String.valueOf(mLastLocation.getLatitude());
+            longitude=String.valueOf(mLastLocation.getLongitude());
         }
     };
 
@@ -312,7 +333,6 @@ public class Conversation extends AppCompatActivity {
                     if(response!=null){
 
                         if(response.body().getStatus().equals("1")){
-                            Toast.makeText(Conversation.this,"Dealer Added", Toast.LENGTH_SHORT).show();
                             dialog2.dismiss();
                         }
                         else{
@@ -337,6 +357,8 @@ public class Conversation extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         Intent i=new Intent(Conversation.this,Dealers.class);
+        i.putExtra("city",city);
+        i.putExtra("area",area);
         startActivity(i);
     }
 }

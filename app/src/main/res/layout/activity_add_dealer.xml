@@ -86,13 +86,14 @@
             android:textColor="@color/blue" />
 
         <EditText
+            android:id="@+id/shopname"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@drawable/round_back_dark_blue"
             android:hint="Shop Name"
             android:textColorHint="#676767"
             android:maxLines="1"
-            android:inputType="text"
+            android:inputType="textPersonName"
             android:textSize="16sp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
@@ -102,13 +103,14 @@
             />
 
         <EditText
+            android:id="@+id/dealername"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@drawable/round_back_dark_blue"
             android:hint="Dealer Name"
             android:textColorHint="#676767"
             android:maxLines="1"
-            android:inputType="text"
+            android:inputType="textPersonName"
             android:textSize="16sp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
@@ -118,6 +120,7 @@
             />
 
         <EditText
+            android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@drawable/round_back_dark_blue"
