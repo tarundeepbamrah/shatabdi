@@ -44,9 +44,6 @@ public class SalesmanDashboard extends AppCompatActivity {
     AppCompatButton finddealers;
     ApiInterface apiInterface;
     TextView logout;
-    //String[] area = {"Gandhi Nagar","Gill Road"},city = {};
-    //String city[] = new String[20];
-    //String[] area = new String[20];
     AutoCompleteTextView autoCompleteTextView,autoCompleteTextView2;
     List<String> ListCity=  new ArrayList<String>();
     List<String> ListArea=  new ArrayList<String>();
@@ -60,6 +57,8 @@ public class SalesmanDashboard extends AppCompatActivity {
         setContentView(R.layout.activity_salesman_dashboard);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
+        finddealers=findViewById(R.id.finddealers);
+        logout=findViewById(R.id.logout);
 
         AlertDialog.Builder builder= new AlertDialog.Builder(SalesmanDashboard.this);
         View view1 = LayoutInflater.from(SalesmanDashboard.this).inflate(R.layout.loadingdialog,null);
@@ -78,9 +77,6 @@ public class SalesmanDashboard extends AppCompatActivity {
                 dialog.dismiss();
             }
         },10000);
-
-        finddealers=findViewById(R.id.finddealers);
-        logout=findViewById(R.id.logout);
 
         initialization();
         getresult();
@@ -123,9 +119,6 @@ public class SalesmanDashboard extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //mAuth = FirebaseAuth.getInstance();
-                        //mAuth.signOut();
-                        //Toast.makeText(SalesmanDashboard.this, "Logged out", Toast.LENGTH_SHORT).show();
                         AlertDialog dialog1;
                         AlertDialog.Builder builder1= new AlertDialog.Builder(SalesmanDashboard.this);
                         View view1 = LayoutInflater.from(SalesmanDashboard.this).inflate(R.layout.loadingdialog,null);
@@ -229,9 +222,6 @@ public class SalesmanDashboard extends AppCompatActivity {
                             }
 
                             dialog.dismiss();
-                            //Toast.makeText(SalesmanDashboard.this, List.get(0), Toast.LENGTH_SHORT).show();
-                            //Toast.makeText(SalesmanDashboard.this, List.get(1), Toast.LENGTH_SHORT).show();
-
                             autoCompleteTextView2=findViewById(R.id.auto_complete_txt_area);
                             adapteritem2= new ArrayAdapter<String>(SalesmanDashboard.this,R.layout.list_item,ListArea);
                             autoCompleteTextView2.setAdapter(adapteritem2);
@@ -241,7 +231,6 @@ public class SalesmanDashboard extends AppCompatActivity {
                                     String area=adapterView.getItemAtPosition(i).toString();
                                 }
                             });
-
                         }
                         else{
                             Toast.makeText(SalesmanDashboard.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();

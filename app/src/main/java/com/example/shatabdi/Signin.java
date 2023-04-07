@@ -31,8 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Signin extends AppCompatActivity {
     AppCompatButton login;
-
-    //private FirebaseAuth mAuth;
+    EditText email,pass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +40,9 @@ public class Signin extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
         login= findViewById(R.id.login);
+        email=findViewById(R.id.mail);
+        pass=findViewById(R.id.password);
+
         if(!checkPer()){
             login.setEnabled(false);
             login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.disabled_button_bg));
@@ -53,8 +55,6 @@ public class Signin extends AppCompatActivity {
             login.setTextColor(Color.WHITE);
         }
 
-        EditText email=findViewById(R.id.mail);
-        EditText pass=findViewById(R.id.password);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,7 +100,6 @@ public class Signin extends AppCompatActivity {
                         startActivity(i);
                     }
                 },3000);
-
             }
         });
     }
@@ -151,7 +150,6 @@ public class Signin extends AppCompatActivity {
         int resultStorage= ActivityCompat.checkSelfPermission(this,READ_EXTERNAL_STORAGE);
         int resultCam= ActivityCompat.checkSelfPermission(this,CAMERA);
         int resultLoc= ActivityCompat.checkSelfPermission(this,ACCESS_FINE_LOCATION);
-
         return resultStorage==PackageManager.PERMISSION_GRANTED && resultCam==PackageManager.PERMISSION_GRANTED && resultLoc==PackageManager.PERMISSION_GRANTED;
     }
 }

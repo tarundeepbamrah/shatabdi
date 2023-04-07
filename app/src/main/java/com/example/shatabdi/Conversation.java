@@ -46,8 +46,7 @@ public class Conversation extends AppCompatActivity {
     AppCompatButton sendreport,cancel,confirm;
     CheckBox attendence;
     Boolean checkboxvalue=false;
-    TextView logout;
-    EditText confirmconversation;
+    TextView logout,confirmconversation;
     FusedLocationProviderClient mFusedLocationClient;
     ApiInterface apiInterface;
     AlertDialog dialog2;
@@ -145,6 +144,7 @@ public class Conversation extends AppCompatActivity {
                     cancel = view1.findViewById(R.id.cancel);
                     confirm = view1.findViewById(R.id.confirm);
                     confirmconversation = view1.findViewById(R.id.confirmconversation);
+                    confirmconversation.setText("Hellohfhgfhfhfghffhffdhdfdgxfhfhffhfgfhfhcbcvbcbcbfhhfhgfhgfhgfhfhghhfhgffhfhgfbcb");
                     builder.setView(view1);
                     AlertDialog dialog = builder.create();
                     dialog.getWindow().getAttributes().windowAnimations = R.style.animation;

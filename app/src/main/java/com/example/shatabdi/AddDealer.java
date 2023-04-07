@@ -35,6 +35,7 @@ public class AddDealer extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
         logout=findViewById(R.id.logout);
+        adddealer=findViewById(R.id.adddealer);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,7 +79,6 @@ public class AddDealer extends AppCompatActivity {
                 alert.show();
             }
         });
-        adddealer=findViewById(R.id.adddealer);
         adddealer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,10 +118,8 @@ public class AddDealer extends AppCompatActivity {
                     if(response!=null){
 
                         if(response.body().getStatus().equals("1")){
-                            //setadapter(response.body().getData());
                             int i;
                             for(i=0;i<response.body().getData().size();i++){
-                                //Toast.makeText(AddDealer.this, response.body().getData().get(i).getDealer(), Toast.LENGTH_SHORT).show();
                                 if(response.body().getData().get(i).getDealer().equals("nbnb")&&response.body().getData().get(i).getDealer_name().equals("Vidya Furniture")&&response.body().getData().get(i).getPhone().equals("897654322")){
                                     Toast.makeText(AddDealer.this, "Dealer already exist", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
@@ -129,7 +127,6 @@ public class AddDealer extends AppCompatActivity {
                                 }
                             }
                             if(i==response.body().getData().size()){
-                                //Toast.makeText(AddDealer.this, "exist", Toast.LENGTH_SHORT).show();
                                 getresultadddealer("Delhi","Noida","ayush","Vidya Furniture","897654322");
                             }
                         }
@@ -141,7 +138,6 @@ public class AddDealer extends AppCompatActivity {
                 catch(Exception e){
                     Log.e("Exception",e.getLocalizedMessage());
                 }
-
             }
 
             @Override

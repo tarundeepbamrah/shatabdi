@@ -44,6 +44,9 @@ public class Dealers extends AppCompatActivity {
         setContentView(R.layout.activity_dealers);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
+        addbutton = findViewById(R.id.addbutton);
+        nodealers=findViewById(R.id.nodealers);
+        logout = findViewById(R.id.logout);
 
         AlertDialog.Builder builder= new AlertDialog.Builder(Dealers.this);
         View view1 = LayoutInflater.from(Dealers.this).inflate(R.layout.loadingdialog,null);
@@ -63,7 +66,6 @@ public class Dealers extends AppCompatActivity {
             }
         },10000);
 
-        addbutton = findViewById(R.id.addbutton);
         addbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,8 +73,7 @@ public class Dealers extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        nodealers=findViewById(R.id.nodealers);
-        logout = findViewById(R.id.logout);
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

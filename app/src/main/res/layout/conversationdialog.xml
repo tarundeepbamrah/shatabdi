@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:paddingHorizontal="10dp"
         >
 
 
@@ -33,26 +34,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.022" />
 
-        <EditText
-            android:id="@+id/confirmconversation"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@drawable/round_back_dark_blue"
-            android:textColorHint="#676767"
-            android:inputType="textMultiLine"
-            android:focusable="false"
-            android:textSize="16sp"
-            android:lines="20"
-            android:overScrollMode="always"
-            android:scrollbarStyle="insideInset"
-            android:scrollHorizontally="false"
-            android:scrollbars="vertical"
-            android:gravity="top"
             android:padding="15dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="20dp"
-            />
+            >
+           <TextView
+               android:id="@+id/confirmconversation"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+
+               android:lines="50"
+               android:scrollHorizontally="false"
+               />
+        </ScrollView>
+
 
 
         <RelativeLayout
