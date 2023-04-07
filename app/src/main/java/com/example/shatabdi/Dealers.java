@@ -36,10 +36,6 @@ public class Dealers extends AppCompatActivity {
     AdapterDealers adapter;
     AlertDialog dialog;
 
-    //ModelDealers model1 = new ModelDealers(1,"Delhi","GT","Tarundeep","Parminder","7617613888");
-    //ModelDealers model2 = new ModelDealers(2,"Rupc","ML","Devendra","Satvinder","7617613888");
-    //ModelDealers model3 = new ModelDealers(3,"Bazpur","CP","Ayush","Gagan","7617613888");
-    //List<ModelDealers> modellist = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,7 +114,7 @@ public class Dealers extends AppCompatActivity {
         });
 
         initialization();
-        getresult("Faridabad","H Block");
+        getresult("Delhi","Noida");
     }
 
     private void initialization() {

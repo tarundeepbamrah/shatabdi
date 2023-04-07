@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,11 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class Conversation extends AppCompatActivity {
     AppCompatButton sendreport,cancel,confirm;
     CheckBox attendence;
@@ -43,6 +49,8 @@ public class Conversation extends AppCompatActivity {
     TextView logout;
     EditText confirmconversation;
     FusedLocationProviderClient mFusedLocationClient;
+    ApiInterface apiInterface;
+    AlertDialog dialog2;
     int PERMISSION_ID = 44;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +159,28 @@ public class Conversation extends AppCompatActivity {
                     confirm.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            initialization();
+
+                            AlertDialog.Builder builder2= new AlertDialog.Builder(Conversation.this);
+                            View view1 = LayoutInflater.from(Conversation.this).inflate(R.layout.loadingdialog,null);
+                            builder2.setView(view1);
+                            dialog2=builder2.create();
+                            dialog2.getWindow().getAttributes().windowAnimations=R.style.animation;
+                            dialog2.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                            dialog2.setCancelable(false);
+                            dialog2.getWindow().setGravity(Gravity.CENTER);
+                            dialog2.show();
+                            dialog2.getWindow().setLayout(600,400);
+                            Handler handler2=new Handler();
+                            handler2.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dialog2.dismiss();
+                                }
+                            },10000);
+
+                            getresult(2,"Deepak","Hello","1245","897654322","878675","2015-10-12");
+
                             AlertDialog dialog;
                             AlertDialog.Builder builder = new AlertDialog.Builder(Conversation.this);
                             View view2 = LayoutInflater.from(Conversation.this).inflate(R.layout.successdialog, null);
@@ -264,6 +294,42 @@ public class Conversation extends AppCompatActivity {
         if (checkPermissions()) {
             getLastLocation();
         }
+    }
+
+    private void initialization() {
+        Retrofit retrofit= ApiClient.getclient();
+        apiInterface =retrofit.create(ApiInterface.class);
+    }
+
+    private void getresult(int id,String salesman_name,String conversation,String photo_loc,String lattitude,String longitude,String date)
+    {
+        apiInterface.insertConversation(id,salesman_name,conversation,photo_loc,lattitude,longitude,date).enqueue(new Callback<InsertResponse>() {
+            @Override
+            public void onResponse(Call<InsertResponse> call, Response<InsertResponse> response) {
+                try{
+                    if(response!=null){
+
+                        if(response.body().getStatus().equals("1")){
+                            Toast.makeText(Conversation.this,"Dealer Added", Toast.LENGTH_SHORT).show();
+                            dialog2.dismiss();
+                        }
+                        else{
+                            Toast.makeText(Conversation.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                catch(Exception e){
+                    Log.e("Exception",e.getLocalizedMessage());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<InsertResponse> call, Throwable t) {
+                Log.e("Failure",t.getLocalizedMessage());
+
+            }
+        });
     }
 
     @Override

@@ -8,15 +8,24 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class AddDealer extends AppCompatActivity {
     AppCompatButton adddealer;
+    ApiInterface apiInterface;
     TextView logout;
+    AlertDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +79,61 @@ public class AddDealer extends AppCompatActivity {
         adddealer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(AddDealer.this,Dealers.class);
-                startActivity(i);
+                initialization();
+                AlertDialog.Builder builder= new AlertDialog.Builder(AddDealer.this);
+                View view1 = LayoutInflater.from(AddDealer.this).inflate(R.layout.loadingdialog,null);
+                builder.setView(view1);
+                dialog=builder.create();
+                dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
+                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                dialog.setCancelable(false);
+                dialog.getWindow().setGravity(Gravity.CENTER);
+                dialog.show();
+                dialog.getWindow().setLayout(600,400);
+                Handler handler=new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                    }
+                },10000);
+                getresult("Delhi","Noida","ayush","Vidya Furniture","897654322");
+            }
+        });
+    }
+    private void initialization() {
+        Retrofit retrofit= ApiClient.getclient();
+        apiInterface =retrofit.create(ApiInterface.class);
+    }
+    private void getresult(String city,String area,String dealer,String dealer_name,String phone)
+    {
+        apiInterface.insertData(city,area,dealer,dealer_name,phone).enqueue(new Callback<InsertResponse>() {
+            @Override
+            public void onResponse(Call<InsertResponse> call, Response<InsertResponse> response) {
+                try{
+                    if(response!=null){
+
+                        if(response.body().getStatus().equals("1")){
+                            Toast.makeText(AddDealer.this,"Dealer Added", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            Intent i=new Intent(AddDealer.this,Dealers.class);
+                            startActivity(i);
+                        }
+                        else{
+                            Toast.makeText(AddDealer.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                catch(Exception e){
+                    Log.e("Exception",e.getLocalizedMessage());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<InsertResponse> call, Throwable t) {
+                Log.e("Failure",t.getLocalizedMessage());
+
             }
         });
     }

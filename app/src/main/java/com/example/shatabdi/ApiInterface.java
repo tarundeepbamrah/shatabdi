@@ -21,5 +21,12 @@ public interface ApiInterface {
     @GET("u428418343_readarea.php")
     Call<GetAreaResponse> getAreaData();
 
+    @FormUrlEncoded
+    @POST("u428418343_insertdealer.php")
+    Call<InsertResponse> insertData(@Field("city") String city,@Field("area") String area,@Field("dealer") String dealer,@Field("dealer_name") String dealer_name,@Field("phone") String phone);
+
+    @FormUrlEncoded
+    @POST("u428418343_insertconversation.php")
+    Call<InsertResponse> insertConversation(@Field("id") int id,@Field("salesman_name") String salesman_name,@Field("conversation") String conversation,@Field("photo_loc") String photo_loc,@Field("lattitude") String lattitude,@Field("longitude") String longitude,@Field("date") String date);
 
 }
