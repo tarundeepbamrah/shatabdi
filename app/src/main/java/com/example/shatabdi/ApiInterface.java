@@ -5,11 +5,15 @@ import com.google.gson.JsonObject;
 import org.json.JSONObject;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 public interface ApiInterface {
-    @GET("u428418343_read.php")
-    Call<GetResponse> getData();
+    @FormUrlEncoded
+    @POST("u428418343_readdealer.php")
+    Call<GetResponse> getData(@Field("city") String city,@Field("area") String area);
 
     @GET("u428418343_readcity.php")
     Call<GetStringResponse> getCityData();

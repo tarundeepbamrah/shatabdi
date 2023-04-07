@@ -116,15 +116,9 @@ public class Dealers extends AppCompatActivity {
                 alert.show();
             }
         });
-        //modellist.add(model1);
-        //modellist.add(model2);
-        //modellist.add(model3);
-        //modellist.add(model1);
-        //modellist.add(model2);
 
-        //setadapter(modellist);
         initialization();
-        getresult();
+        getresult("Faridabad","H Block");
     }
 
     private void initialization() {
@@ -135,15 +129,15 @@ public class Dealers extends AppCompatActivity {
 
 
     private void setadapter(List<ModelDealers> model) {
-        adapter = new AdapterDealers(Dealers.this, model,"Delhi","Noida");
+        adapter = new AdapterDealers(Dealers.this, model);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Dealers.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
     }
 
-    private void getresult()
+    private void getresult(String city,String area)
     {
-        apiInterface.getData().enqueue(new Callback<GetResponse>() {
+        apiInterface.getData(city,area).enqueue(new Callback<GetResponse>() {
             @Override
             public void onResponse(Call<GetResponse> call, Response<GetResponse> response) {
                 try{

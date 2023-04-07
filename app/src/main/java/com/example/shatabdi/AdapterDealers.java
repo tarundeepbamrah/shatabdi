@@ -19,14 +19,10 @@ import java.util.List;
 public class AdapterDealers extends RecyclerView.Adapter<AdapterDealers.ViewHolder> {
     Context context;
     List<ModelDealers> modelList;
-    String City,Area;
 
-
-    public AdapterDealers(Context context, List<ModelDealers> modelList,String City,String Area) {
+    public AdapterDealers(Context context, List<ModelDealers> modelList) {
         this.context = context;
         this.modelList = modelList;
-        this.City= City;
-        this.Area=Area;
     }
     @NonNull
     @Override
@@ -37,7 +33,6 @@ public class AdapterDealers extends RecyclerView.Adapter<AdapterDealers.ViewHold
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        if(String.valueOf(modelList.get(position).getCity()).equals(City) && String.valueOf(modelList.get(position).getArea()).equals(Area)){
             holder.shopname.setText(String.valueOf(modelList.get(position).getDealer()));
             holder.dealername.setText(modelList.get(position).getDealer_name());
             holder.phone.setText(modelList.get(position).getPhone());
@@ -48,8 +43,6 @@ public class AdapterDealers extends RecyclerView.Adapter<AdapterDealers.ViewHold
                     context.startActivity(j);
                 }
             });
-        }
-
     }
     @Override
     public int getItemCount() {
