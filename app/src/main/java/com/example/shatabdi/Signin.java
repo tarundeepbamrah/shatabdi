@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -37,23 +38,28 @@ public class Signin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_main);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
+        }
         login= findViewById(R.id.login);
         email=findViewById(R.id.mail);
         pass=findViewById(R.id.password);
 
+
         if(!checkPer()){
-            login.setEnabled(false);
-            login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.disabled_button_bg));
-            login.setTextColor(Color.DKGRAY);
-            ActivityCompat.requestPermissions(Signin.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+            ActivityCompat.requestPermissions(Signin.this, new String[]{CAMERA, ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+            //login.setEnabled(false);
+            //login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.disabled_button_bg));
+            //login.setTextColor(Color.DKGRAY);
+
         }
-        else {
+        /*else {
             login.setEnabled(true);
             login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.button_bg));
             login.setTextColor(Color.WHITE);
-        }
+        }*/
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +92,9 @@ public class Signin extends AppCompatActivity {
                 builder.setView(view1);
                 dialog=builder.create();
                 dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
-                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                }
                 dialog.setCancelable(false);
                 dialog.getWindow().setGravity(Gravity.CENTER);
                 dialog.show();
@@ -111,7 +119,9 @@ public class Signin extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finishAffinity();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    finishAffinity();
+                }
             }
         });
         builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -121,7 +131,9 @@ public class Signin extends AppCompatActivity {
             }
         });
         AlertDialog alert=builder.create();
-        alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+        }
         alert.getWindow().setLayout(600,400);
         alert.show();
     }
@@ -130,26 +142,25 @@ public class Signin extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode==0){
-            if(grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED && grantResults[2]==PackageManager.PERMISSION_GRANTED ){
-                Toast.makeText(this, "All Permissions Granted", Toast.LENGTH_SHORT).show();
-                login.setEnabled(true);
-                login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.button_bg));
-                login.setTextColor(Color.WHITE);
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED){
+                //Toast.makeText(this, "All Permissions Granted", Toast.LENGTH_SHORT).show();
+                //login.setEnabled(true);
+                //login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.button_bg));
+                //login.setTextColor(Color.WHITE);
 
             }
             else{
                 Toast.makeText(this, "Permissions Required", Toast.LENGTH_SHORT).show();
-                login.setEnabled(false);
-                login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.disabled_button_bg));
-                login.setTextColor(Color.DKGRAY);
+                //login.setEnabled(false);
+                //login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.disabled_button_bg));
+                //login.setTextColor(Color.DKGRAY);
             }
         }
     }
 
     public boolean checkPer(){
-        int resultStorage= ActivityCompat.checkSelfPermission(this,READ_EXTERNAL_STORAGE);
         int resultCam= ActivityCompat.checkSelfPermission(this,CAMERA);
         int resultLoc= ActivityCompat.checkSelfPermission(this,ACCESS_FINE_LOCATION);
-        return resultStorage==PackageManager.PERMISSION_GRANTED && resultCam==PackageManager.PERMISSION_GRANTED && resultLoc==PackageManager.PERMISSION_GRANTED;
+        return resultCam==PackageManager.PERMISSION_GRANTED && resultLoc==PackageManager.PERMISSION_GRANTED;
     }
 }

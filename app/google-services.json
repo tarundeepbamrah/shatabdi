@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "526643480277",
+    "project_id": "shatabdi-24f2c",
+    "storage_bucket": "shatabdi-24f2c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526643480277:android:84630ea9e4164a76a0445c",
+        "android_client_info": {
+          "package_name": "com.example.shatabdi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526643480277-93lbs35itkbjg7ur33h05brbsv9lq5p6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBu-ME6YnEBhUq7Fu2fi6OfxHyp9EDRcF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "526643480277-93lbs35itkbjg7ur33h05brbsv9lq5p6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

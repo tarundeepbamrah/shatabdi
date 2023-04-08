@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -55,7 +56,7 @@ public class Conversation extends AppCompatActivity {
     String city,area,lattitude,longitude,date,conversation;
     Date currentdate= Calendar.getInstance().getTime();
     SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-    String finaldate;
+    String finaldate,locationlink;
     TextView logout,confirmconversation;
     EditText conversationsummary;
     FusedLocationProviderClient mFusedLocationClient;
@@ -67,8 +68,10 @@ public class Conversation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_conversation);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
+        }
         attendence=findViewById(R.id.attendence);
         sendreport= findViewById(R.id.sendreport);
         conversationsummary=findViewById(R.id.conversation);
@@ -84,11 +87,12 @@ public class Conversation extends AppCompatActivity {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
 
+
         logout=findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Conversation.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Conversation.this);
                 builder.setCancelable(false);
                 builder.setMessage("Do you want to Logout?");
 
@@ -101,7 +105,9 @@ public class Conversation extends AppCompatActivity {
                         builder1.setView(view1);
                         dialog1=builder1.create();
                         dialog1.getWindow().getAttributes().windowAnimations=R.style.animation;
-                        dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                        }
                         dialog1.setCancelable(false);
                         dialog1.getWindow().setGravity(Gravity.CENTER);
                         dialog1.show();
@@ -124,8 +130,10 @@ public class Conversation extends AppCompatActivity {
                     }
                 });
 
-                android.app.AlertDialog alert=builder.create();
-                alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                AlertDialog alert=builder.create();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                }
                 alert.getWindow().setLayout(600,400);
                 alert.show();
             }
@@ -165,7 +173,9 @@ public class Conversation extends AppCompatActivity {
                     builder.setView(view1);
                     AlertDialog dialog = builder.create();
                     dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
-                    dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                    }
                     dialog.setCancelable(false);
                     dialog.show();
                     cancel.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +195,9 @@ public class Conversation extends AppCompatActivity {
                             builder2.setView(view1);
                             dialog2=builder2.create();
                             dialog2.getWindow().getAttributes().windowAnimations=R.style.animation;
-                            dialog2.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                dialog2.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                            }
                             dialog2.setCancelable(false);
                             dialog2.getWindow().setGravity(Gravity.CENTER);
                             dialog2.show();
@@ -198,7 +210,8 @@ public class Conversation extends AppCompatActivity {
                                 }
                             },10000);
 
-                            getresult(id,"Deepak",conversation,"1245",lattitude,longitude,finaldate);
+
+                            getresult(id,"Deepak",conversation,"1245",lattitude,longitude,locationlink,finaldate);
 
                             AlertDialog dialog;
                             AlertDialog.Builder builder = new AlertDialog.Builder(Conversation.this);
@@ -206,7 +219,9 @@ public class Conversation extends AppCompatActivity {
                             builder.setView(view2);
                             dialog = builder.create();
                             dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
-                            dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                            }
                             dialog.setCancelable(true);
                             dialog.getWindow().setGravity(Gravity.CENTER);
                             dialog.show();
@@ -216,8 +231,10 @@ public class Conversation extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     dialog.dismiss();
-                                    Intent i = new Intent(Conversation.this, SalesmanDashboard.class);
-                                    startActivity(new Intent(getApplicationContext(), SalesmanDashboard.class));
+                                    Intent i = new Intent(Conversation.this, Dealers.class);
+                                    i.putExtra("city",city);
+                                    i.putExtra("area",area);
+                                    startActivity(i);
                                 }
                             }, 2000);
                         }
@@ -245,6 +262,7 @@ public class Conversation extends AppCompatActivity {
                             //Toast.makeText(Conversation.this, "Latitude: " + location.getLatitude() + " "+"Longitude: "+ location.getLongitude()+" ", Toast.LENGTH_SHORT).show();
                             lattitude=String.valueOf(location.getLatitude());
                             longitude=String.valueOf(location.getLongitude());
+                            locationlink="https://www.google.com/maps/search/?api=1&query="+lattitude+", "+longitude;
                             //latitudeTextView.setText(location.getLatitude() + "");
                             //longitTextView.setText(location.getLongitude() + "");
                         }
@@ -280,6 +298,7 @@ public class Conversation extends AppCompatActivity {
             //Toast.makeText(Conversation.this, "Latitude: " + mLastLocation.getLatitude() + " "+"Longitude: "+ mLastLocation.getLongitude()+" ", Toast.LENGTH_SHORT).show();
             lattitude=String.valueOf(mLastLocation.getLatitude());
             longitude=String.valueOf(mLastLocation.getLongitude());
+            locationlink="https://www.google.com/maps/search/?api=1&query="+lattitude+", "+longitude;
         }
     };
 
@@ -324,9 +343,9 @@ public class Conversation extends AppCompatActivity {
         apiInterface =retrofit.create(ApiInterface.class);
     }
 
-    private void getresult(int id,String salesman_name,String conversation,String photo_loc,String lattitude,String longitude,String date)
+    private void getresult(int id,String salesman_name,String conversation,String photo_loc,String lattitude,String longitude,String location,String date)
     {
-        apiInterface.insertConversation(id,salesman_name,conversation,photo_loc,lattitude,longitude,date).enqueue(new Callback<InsertResponse>() {
+        apiInterface.insertConversation(id,salesman_name,conversation,photo_loc,lattitude,longitude,location,date).enqueue(new Callback<InsertResponse>() {
             @Override
             public void onResponse(Call<InsertResponse> call, Response<InsertResponse> response) {
                 try{

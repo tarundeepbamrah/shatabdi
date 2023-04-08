@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -35,8 +36,10 @@ public class AddDealer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_add_dealer);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
+        }
         logout=findViewById(R.id.logout);
         adddealer=findViewById(R.id.adddealer);
         shopname=findViewById(R.id.shopname);
@@ -47,19 +50,21 @@ public class AddDealer extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddDealer.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddDealer.this);
                 builder.setCancelable(false);
                 builder.setMessage("Do you want to Logout?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        android.app.AlertDialog dialog1;
-                        android.app.AlertDialog.Builder builder1= new AlertDialog.Builder(AddDealer.this);
+                        AlertDialog dialog1;
+                        AlertDialog.Builder builder1= new AlertDialog.Builder(AddDealer.this);
                         View view1 = LayoutInflater.from(AddDealer.this).inflate(R.layout.loadingdialog,null);
                         builder1.setView(view1);
                         dialog1=builder1.create();
                         dialog1.getWindow().getAttributes().windowAnimations=R.style.animation;
-                        dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                        }
                         dialog1.setCancelable(false);
                         dialog1.getWindow().setGravity(Gravity.CENTER);
                         dialog1.show();
@@ -81,8 +86,10 @@ public class AddDealer extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-                android.app.AlertDialog alert=builder.create();
-                alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                AlertDialog alert=builder.create();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                }
                 alert.getWindow().setLayout(600,400);
                 alert.show();
             }
@@ -110,7 +117,9 @@ public class AddDealer extends AppCompatActivity {
                     builder.setView(view1);
                     dialog=builder.create();
                     dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
-                    dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                    }
                     dialog.setCancelable(false);
                     dialog.getWindow().setGravity(Gravity.CENTER);
                     dialog.show();
