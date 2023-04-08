@@ -29,23 +29,30 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Signin extends AppCompatActivity {
     AppCompatButton login;
     EditText email,pass;
+    private FirebaseAuth mAuth;
+    FirebaseDatabase dbref = FirebaseDatabase.getInstance("https://login-154fc-default-rtdb.firebaseio.com/");
+    DatabaseReference databaseReference;
+    Salesmandetail userdetail = new Salesmandetail();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_main);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
-        }
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
         login= findViewById(R.id.login);
         email=findViewById(R.id.mail);
         pass=findViewById(R.id.password);
+        mAuth=FirebaseAuth.getInstance();
 
 
         if(!checkPer()){
@@ -64,50 +71,56 @@ public class Signin extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String mail=email.getText().toString();
+                String mail=email.getText().toString()+"@shatabdiply.com";
                 String password=pass.getText().toString();
-                /*
-                mAuth = FirebaseAuth.getInstance();
-                mAuth.signInWithEmailAndPassword(mail, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Toast.makeText(Signin.this, "Logged in", Toast.LENGTH_SHORT).show();
-
-
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Toast.makeText(Signin.this,task.getException().getMessage(),
-                                            Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                        });
-                        */
-                AlertDialog dialog;
-                AlertDialog.Builder builder= new AlertDialog.Builder(Signin.this);
-                View view1 = LayoutInflater.from(Signin.this).inflate(R.layout.loadingdialog,null);
-                builder.setView(view1);
-                dialog=builder.create();
-                dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                if(email.getText().toString().equals("")){
+                    email.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(Signin.this,R.drawable.required),null);
                 }
-                dialog.setCancelable(false);
-                dialog.getWindow().setGravity(Gravity.CENTER);
-                dialog.show();
-                dialog.getWindow().setLayout(600,400);
-                Handler handler=new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.dismiss();
-                        Intent i= new Intent(Signin.this,SalesmanDashboard.class);
-                        startActivity(i);
-                    }
-                },3000);
+                if(pass.getText().toString().equals("")){
+                    pass.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(Signin.this,R.drawable.required),null);
+                }
+                else{
+                    AlertDialog dialog;
+                    AlertDialog.Builder builder= new AlertDialog.Builder(Signin.this);
+                    View view1 = LayoutInflater.from(Signin.this).inflate(R.layout.loadingdialog,null);
+                    builder.setView(view1);
+                    dialog=builder.create();
+                    dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
+                    dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                    dialog.setCancelable(false);
+                    dialog.getWindow().setGravity(Gravity.CENTER);
+                    dialog.show();
+                    dialog.getWindow().setLayout(600,400);
+
+                    mAuth.signInWithEmailAndPassword(mail, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        //Toast.makeText(Signin.this, "Logged in", Toast.LENGTH_SHORT).show();
+                                        //String id = task.getResult().getUser().getUid();
+                                        //String name= getIntent().getStringExtra("name");
+                                        dialog.dismiss();
+                                        Intent i= new Intent(Signin.this,SalesmanDashboard.class);
+                                        startActivity(i);
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Handler handler=new Handler();
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                dialog.dismiss();
+                                            }
+                                        },3000);
+                                        Toast.makeText(Signin.this,task.getException().getMessage(),
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+                            });
+                }
+
             }
         });
     }
@@ -119,9 +132,7 @@ public class Signin extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     finishAffinity();
-                }
             }
         });
         builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -131,9 +142,7 @@ public class Signin extends AppCompatActivity {
             }
         });
         AlertDialog alert=builder.create();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-        }
+        alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
         alert.getWindow().setLayout(600,400);
         alert.show();
     }

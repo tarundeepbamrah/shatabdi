@@ -68,10 +68,8 @@ public class Conversation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_conversation);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
-        }
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
         attendence=findViewById(R.id.attendence);
         sendreport= findViewById(R.id.sendreport);
         conversationsummary=findViewById(R.id.conversation);
@@ -131,9 +129,7 @@ public class Conversation extends AppCompatActivity {
                 });
 
                 AlertDialog alert=builder.create();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                }
+                alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
                 alert.getWindow().setLayout(600,400);
                 alert.show();
             }
@@ -173,9 +169,8 @@ public class Conversation extends AppCompatActivity {
                     builder.setView(view1);
                     AlertDialog dialog = builder.create();
                     dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                    }
+                    dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+
                     dialog.setCancelable(false);
                     dialog.show();
                     cancel.setOnClickListener(new View.OnClickListener() {
@@ -195,9 +190,8 @@ public class Conversation extends AppCompatActivity {
                             builder2.setView(view1);
                             dialog2=builder2.create();
                             dialog2.getWindow().getAttributes().windowAnimations=R.style.animation;
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                dialog2.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                            }
+                            dialog2.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+
                             dialog2.setCancelable(false);
                             dialog2.getWindow().setGravity(Gravity.CENTER);
                             dialog2.show();
@@ -219,9 +213,9 @@ public class Conversation extends AppCompatActivity {
                             builder.setView(view2);
                             dialog = builder.create();
                             dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                            }
+                            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+                            //}
                             dialog.setCancelable(true);
                             dialog.getWindow().setGravity(Gravity.CENTER);
                             dialog.show();

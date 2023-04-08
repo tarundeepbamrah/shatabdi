@@ -36,10 +36,8 @@ public class AddDealer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_add_dealer);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
-        }
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
         logout=findViewById(R.id.logout);
         adddealer=findViewById(R.id.adddealer);
         shopname=findViewById(R.id.shopname);
@@ -62,9 +60,8 @@ public class AddDealer extends AppCompatActivity {
                         builder1.setView(view1);
                         dialog1=builder1.create();
                         dialog1.getWindow().getAttributes().windowAnimations=R.style.animation;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                        }
+                        dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+
                         dialog1.setCancelable(false);
                         dialog1.getWindow().setGravity(Gravity.CENTER);
                         dialog1.show();
@@ -87,9 +84,7 @@ public class AddDealer extends AppCompatActivity {
                     }
                 });
                 AlertDialog alert=builder.create();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                }
+                alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
                 alert.getWindow().setLayout(600,400);
                 alert.show();
             }
@@ -117,9 +112,7 @@ public class AddDealer extends AppCompatActivity {
                     builder.setView(view1);
                     dialog=builder.create();
                     dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                    }
+                    dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
                     dialog.setCancelable(false);
                     dialog.getWindow().setGravity(Gravity.CENTER);
                     dialog.show();
