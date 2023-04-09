@@ -32,8 +32,8 @@ import retrofit2.Retrofit;
 
 public class Dealers extends AppCompatActivity {
     AppCompatButton addbutton;
-    String city,area;
-    TextView logout,nodealers;
+    String city,area,name,phone,position;
+    TextView logout,nodealers,username;
     ApiInterface apiInterface;
     RecyclerView recyclerView;
     AdapterDealers adapter;
@@ -49,8 +49,13 @@ public class Dealers extends AppCompatActivity {
         addbutton = findViewById(R.id.addbutton);
         nodealers=findViewById(R.id.nodealers);
         logout = findViewById(R.id.logout);
+        username=findViewById(R.id.username);
         city=getIntent().getExtras().getString("city");
         area=getIntent().getExtras().getString("area");
+        name=getIntent().getExtras().getString("name");
+        phone=getIntent().getExtras().getString("phone");
+        position=getIntent().getExtras().getString("position");
+        username.setText(name);
 
         AlertDialog.Builder builder= new AlertDialog.Builder(Dealers.this);
         View view1 = LayoutInflater.from(Dealers.this).inflate(R.layout.loadingdialog,null);
@@ -76,6 +81,9 @@ public class Dealers extends AppCompatActivity {
                 Intent i = new Intent(Dealers.this, AddDealer.class);
                 i.putExtra("city",city);
                 i.putExtra("area",area);
+                i.putExtra("name",name);
+                i.putExtra("phone",phone);
+                i.putExtra("position",position);
                 startActivity(i);
             }
         });
@@ -136,7 +144,7 @@ public class Dealers extends AppCompatActivity {
 
 
     private void setadapter(List<ModelDealers> model) {
-        adapter = new AdapterDealers(Dealers.this, model);
+        adapter = new AdapterDealers(Dealers.this, model,name,phone,position);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Dealers.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -180,6 +188,9 @@ public class Dealers extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent i = new Intent(Dealers.this, SalesmanDashboard.class);
+        i.putExtra("name",name);
+        i.putExtra("phone",phone);
+        i.putExtra("position",position);
         startActivity(i);
     }
 }

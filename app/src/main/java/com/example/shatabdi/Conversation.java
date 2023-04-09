@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -53,11 +55,11 @@ public class Conversation extends AppCompatActivity {
     CheckBox attendence;
     Boolean checkboxvalue=false;
     int id;
-    String city,area,lattitude,longitude,date,conversation;
+    String city,area,lattitude,longitude,conversation,name,phone,position;
     Date currentdate= Calendar.getInstance().getTime();
     SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     String finaldate,locationlink;
-    TextView logout,confirmconversation;
+    TextView logout,confirmconversation,username;
     EditText conversationsummary;
     FusedLocationProviderClient mFusedLocationClient;
     ApiInterface apiInterface;
@@ -76,14 +78,27 @@ public class Conversation extends AppCompatActivity {
         sendreport.setEnabled(false);
         sendreport.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.disabled_button_bg));
         sendreport.setTextColor(Color.DKGRAY);
-
         id=getIntent().getExtras().getInt("id");
         city=getIntent().getExtras().getString("city");
         area=getIntent().getExtras().getString("area");
+        name=getIntent().getExtras().getString("name");
+        phone=getIntent().getExtras().getString("phone");
+        position=getIntent().getExtras().getString("position");
         finaldate=df.format(currentdate);
+        username=findViewById(R.id.username);
+        username.setText(name);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
+
+        conversationsummary.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(!b){
+                    hideKeyboard(view);
+                }
+            }
+        });
 
 
         logout=findViewById(R.id.logout);
@@ -205,7 +220,7 @@ public class Conversation extends AppCompatActivity {
                             },10000);
 
 
-                            getresult(id,"Deepak",conversation,"1245",lattitude,longitude,locationlink,finaldate);
+                            getresult(id,name,phone,conversation,"1245",lattitude,longitude,locationlink,finaldate);
 
                             AlertDialog dialog;
                             AlertDialog.Builder builder = new AlertDialog.Builder(Conversation.this);
@@ -228,6 +243,9 @@ public class Conversation extends AppCompatActivity {
                                     Intent i = new Intent(Conversation.this, Dealers.class);
                                     i.putExtra("city",city);
                                     i.putExtra("area",area);
+                                    i.putExtra("name",name);
+                                    i.putExtra("phone",phone);
+                                    i.putExtra("position",position);
                                     startActivity(i);
                                 }
                             }, 2000);
@@ -337,9 +355,9 @@ public class Conversation extends AppCompatActivity {
         apiInterface =retrofit.create(ApiInterface.class);
     }
 
-    private void getresult(int id,String salesman_name,String conversation,String photo_loc,String lattitude,String longitude,String location,String date)
+    private void getresult(int id,String salesman_name,String salesman_phone,String conversation,String photo_loc,String lattitude,String longitude,String location,String date)
     {
-        apiInterface.insertConversation(id,salesman_name,conversation,photo_loc,lattitude,longitude,location,date).enqueue(new Callback<InsertResponse>() {
+        apiInterface.insertConversation(id,salesman_name,salesman_phone,conversation,photo_loc,lattitude,longitude,location,date).enqueue(new Callback<InsertResponse>() {
             @Override
             public void onResponse(Call<InsertResponse> call, Response<InsertResponse> response) {
                 try{
@@ -366,12 +384,19 @@ public class Conversation extends AppCompatActivity {
             }
         });
     }
+    public void hideKeyboard(View view){
+        InputMethodManager inputMethodManager=(InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+    }
 
     @Override
     public void onBackPressed(){
         Intent i=new Intent(Conversation.this,Dealers.class);
         i.putExtra("city",city);
         i.putExtra("area",area);
+        i.putExtra("name",name);
+        i.putExtra("phone",phone);
+        i.putExtra("position",position);
         startActivity(i);
     }
 }

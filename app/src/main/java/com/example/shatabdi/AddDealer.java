@@ -27,9 +27,9 @@ import retrofit2.Retrofit;
 public class AddDealer extends AppCompatActivity {
     AppCompatButton adddealer;
     ApiInterface apiInterface;
-    String city,area,shopnamestring,dealernamestring,phonestring;
-    EditText shopname,dealername,phone;
-    TextView logout;
+    String city,area,shopnamestring,dealernamestring,phonestring,name,phone,position;
+    EditText shopname,dealername,phonenumber;
+    TextView logout,username;
     AlertDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,15 @@ public class AddDealer extends AppCompatActivity {
         adddealer=findViewById(R.id.adddealer);
         shopname=findViewById(R.id.shopname);
         dealername=findViewById(R.id.dealername);
-        phone=findViewById(R.id.phone);
+        phonenumber=findViewById(R.id.phone);
+        username=findViewById(R.id.username);
         city=getIntent().getExtras().getString("city");
         area=getIntent().getExtras().getString("area");
+        name=getIntent().getExtras().getString("name");
+        phone=getIntent().getExtras().getString("phone");
+        position=getIntent().getExtras().getString("position");
+
+        username.setText(name);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +101,7 @@ public class AddDealer extends AppCompatActivity {
                 initialization();
                 shopnamestring=shopname.getText().toString();
                 dealernamestring=dealername.getText().toString();
-                phonestring=phone.getText().toString();
+                phonestring=phonenumber.getText().toString();
 
                 if(shopname.getText().toString().equals("")){
                     shopname.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(AddDealer.this,R.drawable.required),null);
@@ -103,8 +109,8 @@ public class AddDealer extends AppCompatActivity {
                 if(dealername.getText().toString().equals("")){
                     dealername.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(AddDealer.this,R.drawable.required),null);
                 }
-                if(phone.getText().toString().equals("")){
-                    phone.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(AddDealer.this,R.drawable.required),null);
+                if(phonenumber.getText().toString().equals("")){
+                    phonenumber.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(AddDealer.this,R.drawable.required),null);
                 }
                 else{
                     AlertDialog.Builder builder= new AlertDialog.Builder(AddDealer.this);
@@ -189,6 +195,9 @@ public class AddDealer extends AppCompatActivity {
                             Intent i=new Intent(AddDealer.this,Dealers.class);
                             i.putExtra("city",city);
                             i.putExtra("area",area);
+                            i.putExtra("name",name);
+                            i.putExtra("phone",phone);
+                            i.putExtra("position",position);
                             startActivity(i);
                         }
                         else{
@@ -214,6 +223,9 @@ public class AddDealer extends AppCompatActivity {
         Intent i=new Intent(AddDealer.this,Dealers.class);
         i.putExtra("city",city);
         i.putExtra("area",area);
+        i.putExtra("name",name);
+        i.putExtra("phone",phone);
+        i.putExtra("position",position);
         startActivity(i);
     }
 }

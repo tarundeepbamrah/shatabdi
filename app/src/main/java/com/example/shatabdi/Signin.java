@@ -8,21 +8,16 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,21 +34,22 @@ public class Signin extends AppCompatActivity {
     AppCompatButton login;
     EditText email,pass;
     private FirebaseAuth mAuth;
-    FirebaseDatabase dbref = FirebaseDatabase.getInstance("https://login-154fc-default-rtdb.firebaseio.com/");
-    DatabaseReference databaseReference;
-    Salesmandetail userdetail = new Salesmandetail();
+    FirebaseDatabase database;
+    DatabaseReference dbref;
+    String name,phone,position,checkphone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_signin);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
         login= findViewById(R.id.login);
         email=findViewById(R.id.mail);
         pass=findViewById(R.id.password);
         mAuth=FirebaseAuth.getInstance();
-
+        database=FirebaseDatabase.getInstance();
+        dbref=database.getReference();
 
         if(!checkPer()){
             ActivityCompat.requestPermissions(Signin.this, new String[]{CAMERA, ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
@@ -73,6 +69,7 @@ public class Signin extends AppCompatActivity {
             public void onClick(View view) {
                 String mail=email.getText().toString()+"@shatabdiply.com";
                 String password=pass.getText().toString();
+                checkphone=email.getText().toString();
                 if(email.getText().toString().equals("")){
                     email.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(Signin.this,R.drawable.required),null);
                 }
@@ -99,11 +96,37 @@ public class Signin extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
                                         //Toast.makeText(Signin.this, "Logged in", Toast.LENGTH_SHORT).show();
-                                        //String id = task.getResult().getUser().getUid();
+                                        //String id = mAuth.getCurrentUser().getUid();
+                                        String id = task.getResult().getUser().getUid();
+                                        //Toast.makeText(Signin.this, id, Toast.LENGTH_SHORT).show();
                                         //String name= getIntent().getStringExtra("name");
-                                        dialog.dismiss();
-                                        Intent i= new Intent(Signin.this,SalesmanDashboard.class);
-                                        startActivity(i);
+                                        //userref=dbref.child(mail).child("name");
+                                        dbref.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+                                                    if(dataSnapshot.child("phone").getValue().toString().equals(checkphone)){
+                                                        name = dataSnapshot.child("name").getValue().toString();
+                                                        phone = dataSnapshot.child("phone").getValue().toString();
+                                                        position = dataSnapshot.child("position").getValue().toString();
+                                                    }
+                                                }
+                                                dialog.dismiss();
+                                                Intent i= new Intent(Signin.this,SalesmanDashboard.class);
+
+                                                i.putExtra("name",name);
+                                                i.putExtra("phone",phone);
+                                                i.putExtra("position",position);
+                                                startActivity(i);
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Handler handler=new Handler();

@@ -4,11 +4,13 @@ public class Salesmandetail {
     String name;
     String phone;
     String role;
+    String UserId;
 
-    public Salesmandetail(String name, String phone, String role) {
+    public Salesmandetail(String name, String phone, String role,String UserId) {
         this.name = name;
         this.phone = phone;
         this.role = role;
+        this.UserId = UserId;
     }
 
     public Salesmandetail() {
@@ -36,5 +38,13 @@ public class Salesmandetail {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(String userId) {
+        UserId = userId;
     }
 }

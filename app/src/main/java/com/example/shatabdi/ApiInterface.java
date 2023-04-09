@@ -27,6 +27,6 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("u428418343_insertconversation.php")
-    Call<InsertResponse> insertConversation(@Field("id") int id,@Field("salesman_name") String salesman_name,@Field("conversation") String conversation,@Field("photo_loc") String photo_loc,@Field("lattitude") String lattitude,@Field("longitude") String longitude,@Field("location") String location,@Field("date") String date);
+    Call<InsertResponse> insertConversation(@Field("id") int id,@Field("salesman_name") String salesman_name,@Field("salesman_phone") String salesman_phone,@Field("conversation") String conversation,@Field("photo_loc") String photo_loc,@Field("lattitude") String lattitude,@Field("longitude") String longitude,@Field("location") String location,@Field("date") String date);
 
 }

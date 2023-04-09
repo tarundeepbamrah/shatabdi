@@ -19,10 +19,14 @@ import java.util.List;
 public class AdapterDealers extends RecyclerView.Adapter<AdapterDealers.ViewHolder> {
     Context context;
     List<ModelDealers> modelList;
+    String name,phone,pos;
 
-    public AdapterDealers(Context context, List<ModelDealers> modelList) {
+    public AdapterDealers(Context context, List<ModelDealers> modelList,String name,String phone,String pos) {
         this.context = context;
         this.modelList = modelList;
+        this.name=name;
+        this.phone=phone;
+        this.pos=pos;
     }
     @NonNull
     @Override
@@ -43,6 +47,9 @@ public class AdapterDealers extends RecyclerView.Adapter<AdapterDealers.ViewHold
                     j.putExtra("id",modelList.get(position).getId());
                     j.putExtra("city",modelList.get(position).getCity());
                     j.putExtra("area",modelList.get(position).getArea());
+                    j.putExtra("name",name);
+                    j.putExtra("phone",phone);
+                    j.putExtra("position",pos);
                     context.startActivity(j);
                 }
             });

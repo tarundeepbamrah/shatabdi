@@ -43,9 +43,9 @@ import retrofit2.Retrofit;
 public class SalesmanDashboard extends AppCompatActivity {
 
     AppCompatButton finddealers;
-    String city,area;
+    String city,area,name,phone,position;
     ApiInterface apiInterface;
-    TextView logout;
+    TextView logout,username;
     AutoCompleteTextView autoCompleteTextView,autoCompleteTextView2;
     List<String> ListCity=  new ArrayList<String>();
     List<String> ListArea=  new ArrayList<String>();
@@ -63,6 +63,11 @@ public class SalesmanDashboard extends AppCompatActivity {
         logout=findViewById(R.id.logout);
         autoCompleteTextView=findViewById(R.id.auto_complete_txt_city);
         autoCompleteTextView2=findViewById(R.id.auto_complete_txt_area);
+        username=findViewById(R.id.username);
+        name=getIntent().getExtras().getString("name");
+        phone=getIntent().getExtras().getString("phone");
+        position=getIntent().getExtras().getString("position");
+        username.setText(name);
 
         AlertDialog.Builder builder= new AlertDialog.Builder(SalesmanDashboard.this);
         View view1 = LayoutInflater.from(SalesmanDashboard.this).inflate(R.layout.loadingdialog,null);
@@ -171,6 +176,9 @@ public class SalesmanDashboard extends AppCompatActivity {
                     getWindow().getAttributes().windowAnimations=R.style.animation;
                     i.putExtra("city",city);
                     i.putExtra("area",area);
+                    i.putExtra("name",name);
+                    i.putExtra("phone",phone);
+                    i.putExtra("position",position);
                     startActivity(i);
                 }
 
