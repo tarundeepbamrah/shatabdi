@@ -43,7 +43,7 @@ import retrofit2.Retrofit;
 public class SalesmanDashboard extends AppCompatActivity {
 
     AppCompatButton finddealers;
-    String city,area,name,phone,position;
+    String city,area,name,phone,position,selectcity;
     ApiInterface apiInterface;
     TextView logout,username;
     AutoCompleteTextView autoCompleteTextView,autoCompleteTextView2;
@@ -205,10 +205,50 @@ public class SalesmanDashboard extends AppCompatActivity {
 
                             adapteritem= new ArrayAdapter<String>(SalesmanDashboard.this,R.layout.list_item,ListCity);
                             autoCompleteTextView.setAdapter(adapteritem);
+                            dialog.dismiss();
                             autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                    String city=adapterView.getItemAtPosition(i).toString();
+                                    selectcity=adapterView.getItemAtPosition(i).toString();
+                                    ListArea.clear();
+                                    dialog.show();
+                                    autoCompleteTextView2.setText("");
+                                    apiInterface.getAreaData(selectcity).enqueue(new Callback<GetAreaResponse>() {
+                                        @Override
+                                        public void onResponse(Call<GetAreaResponse> call, Response<GetAreaResponse> response) {
+                                            try{
+                                                if(response!=null){
+                                                    if(response.body().getStatus().equals("1")){
+
+                                                        for(int i=0;i<response.body().getData().size();i++){
+                                                            ListArea.add(response.body().getData().get(i).getArea());
+                                                        }
+
+                                                        dialog.dismiss();
+                                                        adapteritem2= new ArrayAdapter<String>(SalesmanDashboard.this,R.layout.list_item,ListArea);
+                                                        autoCompleteTextView2.setAdapter(adapteritem2);
+                                                        autoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                            @Override
+                                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                                String area=adapterView.getItemAtPosition(i).toString();
+                                                            }
+                                                        });
+                                                    }
+                                                    else{
+                                                        Toast.makeText(SalesmanDashboard.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            }
+                                            catch(Exception e){
+                                                Log.e("Exception",e.getLocalizedMessage());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<GetAreaResponse> call, Throwable t) {
+                                            Log.e("Failure",t.getLocalizedMessage());
+                                        }
+                                    });
                                 }
                             });
 
@@ -231,42 +271,7 @@ public class SalesmanDashboard extends AppCompatActivity {
             }
         });
 
-        apiInterface.getAreaData().enqueue(new Callback<GetAreaResponse>() {
-            @Override
-            public void onResponse(Call<GetAreaResponse> call, Response<GetAreaResponse> response) {
-                try{
-                    if(response!=null){
-                        if(response.body().getStatus().equals("1")){
 
-                            for(int i=0;i<response.body().getData().size();i++){
-                                ListArea.add(response.body().getData().get(i).getArea());
-                            }
-
-                            dialog.dismiss();
-                            adapteritem2= new ArrayAdapter<String>(SalesmanDashboard.this,R.layout.list_item,ListArea);
-                            autoCompleteTextView2.setAdapter(adapteritem2);
-                            autoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                    String area=adapterView.getItemAtPosition(i).toString();
-                                }
-                            });
-                        }
-                        else{
-                            Toast.makeText(SalesmanDashboard.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-                catch(Exception e){
-                    Log.e("Exception",e.getLocalizedMessage());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetAreaResponse> call, Throwable t) {
-                Log.e("Failure",t.getLocalizedMessage());
-            }
-        });
     }
 
     @Override

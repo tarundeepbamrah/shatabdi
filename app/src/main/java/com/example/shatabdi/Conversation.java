@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
@@ -19,7 +20,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,6 +31,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,8 +42,16 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import org.jetbrains.annotations.Nullable;
+
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -51,14 +63,18 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class Conversation extends AppCompatActivity {
-    AppCompatButton sendreport,cancel,confirm;
+    AppCompatButton sendreport,cancel,confirm,camera;
+    ImageView myimage;
     CheckBox attendence;
-    Boolean checkboxvalue=false;
+    Boolean checkboxvalue=false,imagecaptured=false;
+    byte bb[];
     int id;
+    private StorageReference mStorageRef;
     String city,area,lattitude,longitude,conversation,name,phone,position;
     Date currentdate= Calendar.getInstance().getTime();
     SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-    String finaldate,locationlink;
+    SimpleDateFormat datetime=new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+    String finaldate,locationlink,currentdatetime;
     TextView logout,confirmconversation,username;
     EditText conversationsummary;
     FusedLocationProviderClient mFusedLocationClient;
@@ -72,8 +88,11 @@ public class Conversation extends AppCompatActivity {
         setContentView(R.layout.activity_conversation);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
+        mStorageRef= FirebaseStorage.getInstance().getReference();
         attendence=findViewById(R.id.attendence);
         sendreport= findViewById(R.id.sendreport);
+        myimage= findViewById(R.id.myimage);
+        camera= findViewById(R.id.camera);
         conversationsummary=findViewById(R.id.conversation);
         sendreport.setEnabled(false);
         sendreport.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.disabled_button_bg));
@@ -97,6 +116,13 @@ public class Conversation extends AppCompatActivity {
                 if(!b){
                     hideKeyboard(view);
                 }
+            }
+        });
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadimage();
             }
         });
 
@@ -219,8 +245,13 @@ public class Conversation extends AppCompatActivity {
                                 }
                             },10000);
 
-
-                            getresult(id,name,phone,conversation,"1245",lattitude,longitude,locationlink,finaldate);
+                            if(imagecaptured==true){
+                                currentdatetime=datetime.format(new Date());
+                                getresult(id,name,phone,conversation,phone+"_"+currentdatetime+".jpg",lattitude,longitude,locationlink,finaldate);
+                            }
+                            else{
+                                getresult(id,name,phone,conversation,"No Photo Uploaded",lattitude,longitude,locationlink,finaldate);
+                            }
 
                             AlertDialog dialog;
                             AlertDialog.Builder builder = new AlertDialog.Builder(Conversation.this);
@@ -364,6 +395,7 @@ public class Conversation extends AppCompatActivity {
                     if(response!=null){
 
                         if(response.body().getStatus().equals("1")){
+                            uploadtofirebase(bb);
                             dialog2.dismiss();
                         }
                         else{
@@ -387,6 +419,47 @@ public class Conversation extends AppCompatActivity {
     public void hideKeyboard(View view){
         InputMethodManager inputMethodManager=(InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+    }
+
+    public void uploadimage(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent,101);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if(resultCode==Activity.RESULT_OK){
+            if(requestCode==101){
+                onCaptureImageResult(data);
+            }
+        }
+    }
+
+    private void onCaptureImageResult(Intent data) {
+        Bitmap thumbnail=(Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        thumbnail.compress(Bitmap.CompressFormat.JPEG,100,bytes);
+        bb = bytes.toByteArray();
+        //String file = Base64.encodeToString(bb,Base64.DEFAULT);
+        myimage.setImageBitmap(thumbnail);
+        imagecaptured=true;
+    }
+
+    private void uploadtofirebase(byte[] bb) {
+        StorageReference sr=mStorageRef.child("images/"+phone+"_"+currentdatetime+".jpg");
+        sr.putBytes(bb).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                dialog2.dismiss();
+                //Toast.makeText(Conversation.this, "Successfully Uploaded", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(Conversation.this, "Photo Failed to Upload", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
