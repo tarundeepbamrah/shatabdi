@@ -47,6 +47,7 @@ public class SalesmanDashboard extends AppCompatActivity {
     ApiInterface apiInterface;
     TextView logout,username;
     AutoCompleteTextView autoCompleteTextView,autoCompleteTextView2;
+    FirebaseAuth mAuth;
     List<String> ListCity=  new ArrayList<String>();
     List<String> ListArea=  new ArrayList<String>();
     ArrayAdapter<String> adapteritem,adapteritem2;
@@ -93,41 +94,13 @@ public class SalesmanDashboard extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*AppCompatButton cancel,yes;
-                LinearLayout exit=findViewById(R.id.exit);
-                AlertDialog.Builder builder=new AlertDialog.Builder(SalesmanDashboard.this);
-                View view1 = LayoutInflater.from(SalesmanDashboard.this).inflate(R.layout.confirmexit,exit);
-                cancel=view1.findViewById(R.id.cancel);
-                yes=view1.findViewById(R.id.yes);
-                builder.setView(view1);
-                AlertDialog dialog=builder.create();
-
-                dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
-                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                dialog.setCancelable(false);
-                dialog.show();
-                dialog.getWindow().setLayout(700,400);
-
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-                yes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent i= new Intent(SalesmanDashboard.this,Signin.class);
-                        startActivity(i);
-                    }
-                });*/
-
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(SalesmanDashboard.this);
                 builder.setCancelable(false);
                 builder.setMessage("Do you want to Logout?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        mAuth.signOut();
                         AlertDialog dialog1;
                         AlertDialog.Builder builder1= new AlertDialog.Builder(SalesmanDashboard.this);
                         View view1 = LayoutInflater.from(SalesmanDashboard.this).inflate(R.layout.loadingdialog,null);
@@ -139,6 +112,7 @@ public class SalesmanDashboard extends AppCompatActivity {
                         dialog1.getWindow().setGravity(Gravity.CENTER);
                         dialog1.show();
                         dialog1.getWindow().setLayout(600,400);
+
                         Handler handler=new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override

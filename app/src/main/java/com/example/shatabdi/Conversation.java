@@ -45,6 +45,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -77,6 +78,7 @@ public class Conversation extends AppCompatActivity {
     String finaldate,locationlink,currentdatetime;
     TextView logout,confirmconversation,username;
     EditText conversationsummary;
+    FirebaseAuth mAuth;
     FusedLocationProviderClient mFusedLocationClient;
     ApiInterface apiInterface;
     AlertDialog dialog2;
@@ -138,15 +140,14 @@ public class Conversation extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        mAuth.signOut();
                         AlertDialog dialog1;
                         AlertDialog.Builder builder1= new AlertDialog.Builder(Conversation.this);
                         View view1 = LayoutInflater.from(Conversation.this).inflate(R.layout.loadingdialog,null);
                         builder1.setView(view1);
                         dialog1=builder1.create();
                         dialog1.getWindow().getAttributes().windowAnimations=R.style.animation;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                        }
+                        dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
                         dialog1.setCancelable(false);
                         dialog1.getWindow().setGravity(Gravity.CENTER);
                         dialog1.show();
@@ -211,7 +212,6 @@ public class Conversation extends AppCompatActivity {
                     AlertDialog dialog = builder.create();
                     dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
                     dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-
                     dialog.setCancelable(false);
                     dialog.show();
                     cancel.setOnClickListener(new View.OnClickListener() {
@@ -232,7 +232,6 @@ public class Conversation extends AppCompatActivity {
                             dialog2=builder2.create();
                             dialog2.getWindow().getAttributes().windowAnimations=R.style.animation;
                             dialog2.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-
                             dialog2.setCancelable(false);
                             dialog2.getWindow().setGravity(Gravity.CENTER);
                             dialog2.show();
@@ -259,9 +258,7 @@ public class Conversation extends AppCompatActivity {
                             builder.setView(view2);
                             dialog = builder.create();
                             dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
-                            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                            //}
                             dialog.setCancelable(true);
                             dialog.getWindow().setGravity(Gravity.CENTER);
                             dialog.show();
@@ -302,12 +299,9 @@ public class Conversation extends AppCompatActivity {
                         if (location == null) {
                             requestNewLocationData();
                         } else {
-                            //Toast.makeText(Conversation.this, "Latitude: " + location.getLatitude() + " "+"Longitude: "+ location.getLongitude()+" ", Toast.LENGTH_SHORT).show();
                             lattitude=String.valueOf(location.getLatitude());
                             longitude=String.valueOf(location.getLongitude());
                             locationlink="https://www.google.com/maps/search/?api=1&query="+lattitude+", "+longitude;
-                            //latitudeTextView.setText(location.getLatitude() + "");
-                            //longitTextView.setText(location.getLongitude() + "");
                         }
                     }
                 });
@@ -338,7 +332,6 @@ public class Conversation extends AppCompatActivity {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            //Toast.makeText(Conversation.this, "Latitude: " + mLastLocation.getLatitude() + " "+"Longitude: "+ mLastLocation.getLongitude()+" ", Toast.LENGTH_SHORT).show();
             lattitude=String.valueOf(mLastLocation.getLatitude());
             longitude=String.valueOf(mLastLocation.getLongitude());
             locationlink="https://www.google.com/maps/search/?api=1&query="+lattitude+", "+longitude;
@@ -441,7 +434,6 @@ public class Conversation extends AppCompatActivity {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG,100,bytes);
         bb = bytes.toByteArray();
-        //String file = Base64.encodeToString(bb,Base64.DEFAULT);
         myimage.setImageBitmap(thumbnail);
         imagecaptured=true;
     }
@@ -452,7 +444,6 @@ public class Conversation extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 dialog2.dismiss();
-                //Toast.makeText(Conversation.this, "Successfully Uploaded", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

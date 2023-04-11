@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +31,7 @@ public class AddDealer extends AppCompatActivity {
     ApiInterface apiInterface;
     String city,area,shopnamestring,dealernamestring,phonestring,name,phone,position;
     EditText shopname,dealername,phonenumber;
+    FirebaseAuth mAuth;
     TextView logout,username;
     AlertDialog dialog;
     @Override
@@ -60,6 +63,7 @@ public class AddDealer extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        mAuth.signOut();
                         AlertDialog dialog1;
                         AlertDialog.Builder builder1= new AlertDialog.Builder(AddDealer.this);
                         View view1 = LayoutInflater.from(AddDealer.this).inflate(R.layout.loadingdialog,null);
@@ -165,7 +169,6 @@ public class AddDealer extends AppCompatActivity {
                         }
                         else{
                             getresultadddealer(city,area,shopnamestring,dealernamestring,phonestring);
-                            //Toast.makeText(AddDealer.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

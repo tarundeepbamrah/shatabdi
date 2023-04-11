@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +39,7 @@ public class Dealers extends AppCompatActivity {
     ApiInterface apiInterface;
     RecyclerView recyclerView;
     AdapterDealers adapter;
+    FirebaseAuth mAuth;
     AlertDialog dialog;
 
     @Override
@@ -97,6 +100,7 @@ public class Dealers extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        mAuth.signOut();
                         AlertDialog dialog1;
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(Dealers.this);
                         View view1 = LayoutInflater.from(Dealers.this).inflate(R.layout.loadingdialog, null);
@@ -166,7 +170,6 @@ public class Dealers extends AppCompatActivity {
                         else{
                             nodealers.setText("No Dealers");
                             dialog.dismiss();
-                            //Toast.makeText(Dealers.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

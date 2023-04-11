@@ -53,16 +53,7 @@ public class Signin extends AppCompatActivity {
 
         if(!checkPer()){
             ActivityCompat.requestPermissions(Signin.this, new String[]{CAMERA, ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
-            //login.setEnabled(false);
-            //login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.disabled_button_bg));
-            //login.setTextColor(Color.DKGRAY);
-
         }
-        /*else {
-            login.setEnabled(true);
-            login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.button_bg));
-            login.setTextColor(Color.WHITE);
-        }*/
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,13 +85,6 @@ public class Signin extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        // Sign in success, update UI with the signed-in user's information
-                                        //Toast.makeText(Signin.this, "Logged in", Toast.LENGTH_SHORT).show();
-                                        //String id = mAuth.getCurrentUser().getUid();
-                                        String id = task.getResult().getUser().getUid();
-                                        //Toast.makeText(Signin.this, id, Toast.LENGTH_SHORT).show();
-                                        //String name= getIntent().getStringExtra("name");
-                                        //userref=dbref.child(mail).child("name");
                                         dbref.addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -128,7 +112,6 @@ public class Signin extends AppCompatActivity {
                                         });
 
                                     } else {
-                                        // If sign in fails, display a message to the user.
                                         Handler handler=new Handler();
                                         handler.postDelayed(new Runnable() {
                                             @Override
@@ -175,17 +158,10 @@ public class Signin extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode==0){
             if(grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED){
-                //Toast.makeText(this, "All Permissions Granted", Toast.LENGTH_SHORT).show();
-                //login.setEnabled(true);
-                //login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.button_bg));
-                //login.setTextColor(Color.WHITE);
 
             }
             else{
                 Toast.makeText(this, "Permissions Required", Toast.LENGTH_SHORT).show();
-                //login.setEnabled(false);
-                //login.setBackgroundDrawable(ContextCompat.getDrawable(Signin.this,R.drawable.disabled_button_bg));
-                //login.setTextColor(Color.DKGRAY);
             }
         }
     }
