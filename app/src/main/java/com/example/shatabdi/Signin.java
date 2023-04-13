@@ -78,7 +78,7 @@ public class Signin extends AppCompatActivity {
                     dialog.setCancelable(false);
                     dialog.getWindow().setGravity(Gravity.CENTER);
                     dialog.show();
-                    dialog.getWindow().setLayout(600,400);
+                    //dialog.getWindow().setLayout(600,400);
 
                     mAuth.signInWithEmailAndPassword(mail, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
@@ -149,7 +149,7 @@ public class Signin extends AppCompatActivity {
         });
         AlertDialog alert=builder.create();
         alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-        alert.getWindow().setLayout(600,400);
+        //alert.getWindow().setLayout(600,400);
         alert.show();
     }
 

@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -151,7 +152,7 @@ public class Conversation extends AppCompatActivity {
                         dialog1.setCancelable(false);
                         dialog1.getWindow().setGravity(Gravity.CENTER);
                         dialog1.show();
-                        dialog1.getWindow().setLayout(600,400);
+                        //dialog1.getWindow().setLayout(600,400);
                         Handler handler=new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -235,7 +236,7 @@ public class Conversation extends AppCompatActivity {
                             dialog2.setCancelable(false);
                             dialog2.getWindow().setGravity(Gravity.CENTER);
                             dialog2.show();
-                            dialog2.getWindow().setLayout(600,400);
+                            //dialog2.getWindow().setLayout(600,400);
                             Handler handler2=new Handler();
                             handler2.postDelayed(new Runnable() {
                                 @Override
@@ -262,7 +263,7 @@ public class Conversation extends AppCompatActivity {
                             dialog.setCancelable(true);
                             dialog.getWindow().setGravity(Gravity.CENTER);
                             dialog.show();
-                            dialog.getWindow().setLayout(600, 400);
+                            //dialog.getWindow().setLayout(600, 400);
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override
@@ -434,7 +435,8 @@ public class Conversation extends AppCompatActivity {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG,100,bytes);
         bb = bytes.toByteArray();
-        myimage.setImageBitmap(thumbnail);
+        //myimage.setImageBitmap(thumbnail);
+        camera.setBackground(new BitmapDrawable(getResources(),thumbnail));
         imagecaptured=true;
     }
 

@@ -69,7 +69,7 @@ public class Dealers extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.show();
-        dialog.getWindow().setLayout(600,400);
+        //dialog.getWindow().setLayout(600,400);
         Handler handler=new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -111,7 +111,7 @@ public class Dealers extends AppCompatActivity {
                         dialog1.setCancelable(false);
                         dialog1.getWindow().setGravity(Gravity.CENTER);
                         dialog1.show();
-                        dialog1.getWindow().setLayout(600, 400);
+                        //dialog1.getWindow().setLayout(600, 400);
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -131,7 +131,7 @@ public class Dealers extends AppCompatActivity {
                 });
                 android.app.AlertDialog alert = builder.create();
                 alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                alert.getWindow().setLayout(600, 400);
+                //alert.getWindow().setLayout(600, 400);
                 alert.show();
             }
         });

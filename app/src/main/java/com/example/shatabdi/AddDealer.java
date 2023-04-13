@@ -29,7 +29,7 @@ import retrofit2.Retrofit;
 public class AddDealer extends AppCompatActivity {
     AppCompatButton adddealer;
     ApiInterface apiInterface;
-    String city,area,shopnamestring,dealernamestring,phonestring,name,phone,position;
+    String city,area,shopnamestring,dealernamestring,phonestring,name,salesman_phone,position;
     EditText shopname,dealername,phonenumber;
     FirebaseAuth mAuth;
     TextView logout,username;
@@ -50,7 +50,7 @@ public class AddDealer extends AppCompatActivity {
         city=getIntent().getExtras().getString("city");
         area=getIntent().getExtras().getString("area");
         name=getIntent().getExtras().getString("name");
-        phone=getIntent().getExtras().getString("phone");
+        salesman_phone=getIntent().getExtras().getString("phone");
         position=getIntent().getExtras().getString("position");
 
         username.setText(name);
@@ -75,7 +75,7 @@ public class AddDealer extends AppCompatActivity {
                         dialog1.setCancelable(false);
                         dialog1.getWindow().setGravity(Gravity.CENTER);
                         dialog1.show();
-                        dialog1.getWindow().setLayout(600,400);
+                        //dialog1.getWindow().setLayout(600,400);
                         Handler handler=new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -95,7 +95,7 @@ public class AddDealer extends AppCompatActivity {
                 });
                 AlertDialog alert=builder.create();
                 alert.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
-                alert.getWindow().setLayout(600,400);
+                //alert.getWindow().setLayout(600,400);
                 alert.show();
             }
         });
@@ -126,7 +126,7 @@ public class AddDealer extends AppCompatActivity {
                     dialog.setCancelable(false);
                     dialog.getWindow().setGravity(Gravity.CENTER);
                     dialog.show();
-                    dialog.getWindow().setLayout(600,400);
+                    //dialog.getWindow().setLayout(600,400);
                     Handler handler=new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -199,7 +199,7 @@ public class AddDealer extends AppCompatActivity {
                             i.putExtra("city",city);
                             i.putExtra("area",area);
                             i.putExtra("name",name);
-                            i.putExtra("phone",phone);
+                            i.putExtra("phone",salesman_phone);
                             i.putExtra("position",position);
                             startActivity(i);
                         }
@@ -227,7 +227,7 @@ public class AddDealer extends AppCompatActivity {
         i.putExtra("city",city);
         i.putExtra("area",area);
         i.putExtra("name",name);
-        i.putExtra("phone",phone);
+        i.putExtra("phone",salesman_phone);
         i.putExtra("position",position);
         startActivity(i);
     }
