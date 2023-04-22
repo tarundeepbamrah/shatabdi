@@ -47,7 +47,6 @@ public class SalesmanDashboard extends AppCompatActivity {
     ApiInterface apiInterface;
     TextView logout,username;
     AutoCompleteTextView autoCompleteTextView,autoCompleteTextView2;
-    FirebaseAuth mAuth;
     List<String> ListCity=  new ArrayList<String>();
     List<String> ListArea=  new ArrayList<String>();
     ArrayAdapter<String> adapteritem,adapteritem2;
@@ -79,7 +78,7 @@ public class SalesmanDashboard extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.show();
-        dialog.getWindow().setLayout(600,400);
+        //dialog.getWindow().setLayout(600,400);
         Handler handler=new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -100,7 +99,6 @@ public class SalesmanDashboard extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mAuth.signOut();
                         AlertDialog dialog1;
                         AlertDialog.Builder builder1= new AlertDialog.Builder(SalesmanDashboard.this);
                         View view1 = LayoutInflater.from(SalesmanDashboard.this).inflate(R.layout.loadingdialog,null);

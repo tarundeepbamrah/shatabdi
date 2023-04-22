@@ -2,12 +2,12 @@ package com.example.shatabdi;
 
 import java.util.List;
 
-public class GetResponse {
+public class DealerVisitedResponse {
     String status;
     String message;
-    List<ModelDealer> data;
+    List<ModelDealerVisited> data;
 
-    public GetResponse(String status, String message, List<ModelDealer> data) {
+    public DealerVisitedResponse(String status, String message, List<ModelDealerVisited> data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -29,11 +29,11 @@ public class GetResponse {
         this.message = message;
     }
 
-    public List<ModelDealer> getData() {
+    public List<ModelDealerVisited> getData() {
         return data;
     }
 
-    public void setData(List<ModelDealer> data) {
+    public void setData(List<ModelDealerVisited> data) {
         this.data = data;
     }
 }

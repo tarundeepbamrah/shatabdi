@@ -95,13 +95,22 @@ public class Signin extends AppCompatActivity {
                                                         position = dataSnapshot.child("position").getValue().toString();
                                                     }
                                                 }
-                                                dialog.dismiss();
-                                                Intent i= new Intent(Signin.this,SalesmanDashboard.class);
+                                                if (position.equals("Salesman")){
+                                                    dialog.dismiss();
+                                                    Intent i= new Intent(Signin.this,SalesmanDashboard.class);
+                                                    i.putExtra("name",name);
+                                                    i.putExtra("phone",phone);
+                                                    i.putExtra("position",position);
+                                                    startActivity(i);
+                                                } else if (position.equals("Manager")) {
+                                                    dialog.dismiss();
+                                                    Intent i= new Intent(Signin.this,ManagerDashboard.class);
+                                                    i.putExtra("name",name);
+                                                    i.putExtra("phone",phone);
+                                                    i.putExtra("position",position);
+                                                    startActivity(i);
+                                                }
 
-                                                i.putExtra("name",name);
-                                                i.putExtra("phone",phone);
-                                                i.putExtra("position",position);
-                                                startActivity(i);
 
                                             }
 

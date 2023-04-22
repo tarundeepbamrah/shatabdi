@@ -9,22 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,7 +32,6 @@ public class Dealers extends AppCompatActivity {
     ApiInterface apiInterface;
     RecyclerView recyclerView;
     AdapterDealers adapter;
-    FirebaseAuth mAuth;
     AlertDialog dialog;
 
     @Override
@@ -100,7 +92,6 @@ public class Dealers extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mAuth.signOut();
                         AlertDialog dialog1;
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(Dealers.this);
                         View view1 = LayoutInflater.from(Dealers.this).inflate(R.layout.loadingdialog, null);
@@ -147,7 +138,7 @@ public class Dealers extends AppCompatActivity {
     }
 
 
-    private void setadapter(List<ModelDealers> model) {
+    private void setadapter(List<ModelDealer> model) {
         adapter = new AdapterDealers(Dealers.this, model,name,phone,position);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Dealers.this);
         recyclerView.setLayoutManager(linearLayoutManager);

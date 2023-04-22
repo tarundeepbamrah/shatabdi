@@ -1,28 +1,19 @@
 package com.example.shatabdi;
 
-public class ModelDealers {
+public class ModelDealer {
     int id;
-    String city,area,dealer,dealer_name,phone,date;
+    String city,area,dealer,dealer_name,phone;
 
-    public ModelDealers(int id, String city, String area, String dealer, String dealer_name, String phone, String date) {
+    public ModelDealer(int id, String city, String area, String dealer, String dealer_name, String phone) {
         this.id = id;
         this.city = city;
         this.area = area;
         this.dealer = dealer;
         this.dealer_name = dealer_name;
         this.phone = phone;
-        this.date = date;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public ModelDealers(String city) {
+    public ModelDealer(String city) {
         this.city = city;
     }
 
@@ -74,6 +65,6 @@ public class ModelDealers {
         this.area = area;
     }
 
-    public ModelDealers() {
+    public ModelDealer() {
     }
 }

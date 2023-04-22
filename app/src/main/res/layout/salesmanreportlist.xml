@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        >
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name: "
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone: "
+                android:layout_marginStart="25dp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone"
+                android:layout_marginEnd="25dp"
+                android:layout_marginStart="5dp"
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">a
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/dealersvisited"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="20dp"
+                android:layout_gravity="left"
+                android:background="@drawable/round_back_dark_blue"
+                android:textAllCaps="false"
+                android:text="Dealers Visited"
+                android:layout_marginBottom="10dp"
+                android:padding="8dp"
+                />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/attendance"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:background="@drawable/round_back_dark_blue"
+                android:textAllCaps="false"
+                android:layout_gravity="right"
+                android:layout_marginStart="10dp"
+                android:text="Attendance"
+                android:layout_marginBottom="10dp"
+                android:padding="8dp"
+                />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>

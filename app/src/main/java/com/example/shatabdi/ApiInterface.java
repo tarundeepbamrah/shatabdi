@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
+import java.sql.Date;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -29,5 +31,38 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("u428418343_insertconversation.php")
     Call<InsertResponse> insertConversation(@Field("id") int id,@Field("salesman_name") String salesman_name,@Field("salesman_phone") String salesman_phone,@Field("conversation") String conversation,@Field("photo_loc") String photo_loc,@Field("lattitude") String lattitude,@Field("longitude") String longitude,@Field("location") String location,@Field("date") String date);
+
+    @FormUrlEncoded
+    @POST("u428418343_readsalesman.php")
+    Call<GetSalesmanResponse> getSalesmanData(@Field("sdate") String sdate,@Field("tdate") String tdate);
+    @FormUrlEncoded
+    @POST("u428418343_getdealersvisited.php")
+    Call<GetResponse2> readDealersVisited(@Field("salesman_name") String sname,@Field("sdate") String sdate,@Field("tdate") String tdate);
+    @FormUrlEncoded
+    @POST("u428418343_getconversation.php")
+    Call<GetConversationResponse> readConversation(@Field("salesman_name") String sname,@Field("dealer") String dealer,@Field("date") String date);
+    @FormUrlEncoded
+    @POST("u428418343_getlocation.php")
+    Call<GetLocationResponse> readLocation(@Field("dealer") String dealer,@Field("date") String date,@Field("conversation") String conversation);
+    @FormUrlEncoded
+    @POST("u428418343_getsalesmanlocation.php")
+    Call<GetLocationResponse> readSalesmanLocation(@Field("salesman_name") String sname,@Field("date") String date,@Field("conversation") String conversation);
+    @FormUrlEncoded
+    @POST("u428418343_readattendance.php")
+    Call<GetAttendanceResponse> readAttendance(@Field("sdate") String sdate,@Field("tdate") String tdate,@Field("salesman_name") String sname);
+    @FormUrlEncoded
+    @POST("u428418343_readdealerreport.php")
+    Call<GetResponse2> readDealerReport(@Field("sdate") String sdate,@Field("tdate") String tdate);
+
+    @FormUrlEncoded
+    @POST("u428418343_getsalesmanvisited.php")
+    Call<GetSalesmanVisitedResponse> readSalesmanVisited(@Field("dealer") String dealer,@Field("sdate") String sdate,@Field("tdate") String tdate);
+
+    @FormUrlEncoded
+    @POST("u428418343_getvisitedcity.php")
+    Call<GetSalesmanVisitedResponse> readCityVisited(@Field("city") String city,@Field("area") String area,@Field("sdate") String sdate,@Field("tdate") String tdate);
+    @FormUrlEncoded
+    @POST("u428418343_getDealersinCity.php")
+    Call<GetResponse2> readDealersInCity(@Field("salesman_name") String sname,@Field("city") String city,@Field("area") String area,@Field("date") String date);
 
 }

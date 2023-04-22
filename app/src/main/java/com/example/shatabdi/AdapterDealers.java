@@ -8,20 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 public class AdapterDealers extends RecyclerView.Adapter<AdapterDealers.ViewHolder> {
     Context context;
-    List<ModelDealers> modelList;
+    List<ModelDealer> modelList;
     String name,phone,pos;
 
-    public AdapterDealers(Context context, List<ModelDealers> modelList,String name,String phone,String pos) {
+    public AdapterDealers(Context context, List<ModelDealer> modelList, String name, String phone, String pos) {
         this.context = context;
         this.modelList = modelList;
         this.name=name;

@@ -79,7 +79,6 @@ public class Conversation extends AppCompatActivity {
     String finaldate,locationlink,currentdatetime;
     TextView logout,confirmconversation,username;
     EditText conversationsummary;
-    FirebaseAuth mAuth;
     FusedLocationProviderClient mFusedLocationClient;
     ApiInterface apiInterface;
     AlertDialog dialog2;
@@ -141,7 +140,6 @@ public class Conversation extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mAuth.signOut();
                         AlertDialog dialog1;
                         AlertDialog.Builder builder1= new AlertDialog.Builder(Conversation.this);
                         View view1 = LayoutInflater.from(Conversation.this).inflate(R.layout.loadingdialog,null);

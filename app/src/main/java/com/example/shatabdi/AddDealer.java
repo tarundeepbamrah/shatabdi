@@ -31,7 +31,6 @@ public class AddDealer extends AppCompatActivity {
     ApiInterface apiInterface;
     String city,area,shopnamestring,dealernamestring,phonestring,name,salesman_phone,position;
     EditText shopname,dealername,phonenumber;
-    FirebaseAuth mAuth;
     TextView logout,username;
     AlertDialog dialog;
     @Override
@@ -63,7 +62,6 @@ public class AddDealer extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mAuth.signOut();
                         AlertDialog dialog1;
                         AlertDialog.Builder builder1= new AlertDialog.Builder(AddDealer.this);
                         View view1 = LayoutInflater.from(AddDealer.this).inflate(R.layout.loadingdialog,null);
