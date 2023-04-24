@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -13,12 +14,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
@@ -54,6 +58,8 @@ import com.google.firebase.storage.UploadTask;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -424,16 +430,19 @@ public class Conversation extends AppCompatActivity {
         if(resultCode==Activity.RESULT_OK){
             if(requestCode==101){
                 onCaptureImageResult(data);
+                //File f= new File(currentPhotoPath);
+
             }
         }
     }
+
 
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail=(Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG,100,bytes);
         bb = bytes.toByteArray();
-        //myimage.setImageBitmap(thumbnail);
+
         camera.setBackground(new BitmapDrawable(getResources(),thumbnail));
         imagecaptured=true;
     }
@@ -443,12 +452,13 @@ public class Conversation extends AppCompatActivity {
         sr.putBytes(bb).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                dialog2.dismiss();
+                if(dialog2.isShowing()){
+                    dialog2.dismiss();
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Conversation.this, "Photo Failed to Upload", Toast.LENGTH_SHORT).show();
             }
         });
     }

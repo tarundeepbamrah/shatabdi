@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,19 @@ public class AdapterConversationWithSalesman extends RecyclerView.Adapter<Adapte
                 context.startActivity(j);
             }
         });
+        holder.bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent j = new Intent(context, PhotoViewWithSalesman.class);
+                j.putExtra("sname",sname);
+                j.putExtra("date",date);
+                j.putExtra("sdate",sdate);
+                j.putExtra("tdate",tdate);
+                j.putExtra("dealer",dealer);
+                j.putExtra("conversation",modelList.get(holder.getAdapterPosition()).getConversation());
+                context.startActivity(j);
+            }
+        });
 
     }
 
@@ -63,10 +77,12 @@ public class AdapterConversationWithSalesman extends RecyclerView.Adapter<Adapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView conversation;
         AppCompatButton location;
+        LinearLayout bg;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             conversation= itemView.findViewById(R.id.conversation);
             location=itemView.findViewById(R.id.locview);
+            bg=itemView.findViewById(R.id.bg);
         }
     }
 }
