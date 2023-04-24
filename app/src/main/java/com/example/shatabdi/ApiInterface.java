@@ -67,5 +67,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("u428418343_getPhotoLoc.php")
     Call<GetPhotoResponse> readPhotoLoc(@Field("dealer") String dealer,@Field("date") String date,@Field("conversation") String conversation);
+    @FormUrlEncoded
+    @POST("u428418343_getSalesmanPhotoLoc.php")
+    Call<GetPhotoResponse> readSalesmanPhotoLoc(@Field("salesman_name") String sname,@Field("date") String date,@Field("conversation") String conversation);
 
 }

@@ -41,7 +41,7 @@ public class PhotoViewloc extends AppCompatActivity {
     StorageReference mStorageRef;
     ApiInterface apiInterface;
     AlertDialog dialog1;
-    String dealer,date,conversation,sdate,tdate,sname,city,area;
+    String dealer,date,conversation,sname,city,area;
 
 
     @Override
@@ -139,11 +139,11 @@ public class PhotoViewloc extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent i = new Intent(PhotoViewloc.this, ViewConversationloc.class);
-        i.putExtra("sdate",sdate);
-        i.putExtra("tdate",tdate);
-        i.putExtra("dealer",dealer);
-        i.putExtra("date",date);
         i.putExtra("sname",sname);
+        i.putExtra("city",city);
+        i.putExtra("dealer",dealer);
+        i.putExtra("area",area);
+        i.putExtra("date",date);
         startActivity(i);
     }
 }

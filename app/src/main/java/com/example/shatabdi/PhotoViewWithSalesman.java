@@ -81,11 +81,11 @@ public class PhotoViewWithSalesman extends AppCompatActivity {
             }
         },3000);
 
-        getresult(dealer,date,conversation);
+        getresult(sname,date,conversation);
 
     }
-    private void getresult(String dealer,String date,String conversation) {
-        apiInterface.readPhotoLoc(dealer,date,conversation).enqueue(new Callback<GetPhotoResponse>() {
+    private void getresult(String sname,String date,String conversation) {
+        apiInterface.readSalesmanPhotoLoc(sname,date,conversation).enqueue(new Callback<GetPhotoResponse>() {
             @Override
             public void onResponse(Call<GetPhotoResponse> call, Response<GetPhotoResponse> response) {
                 try{
