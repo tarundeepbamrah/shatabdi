@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
@@ -35,6 +36,7 @@ public class ViewLocation extends AppCompatActivity {
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_view_location);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.blue));
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         conversation=getIntent().getExtras().getString("conversation");
         dealer=getIntent().getExtras().getString("dealer");
         sname=getIntent().getExtras().getString("sname");

@@ -1,6 +1,7 @@
 package com.example.shatabdi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
@@ -40,6 +41,7 @@ public class AddDealer extends AppCompatActivity {
         setContentView(R.layout.activity_add_dealer);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         logout=findViewById(R.id.logout);
         adddealer=findViewById(R.id.adddealer);
         shopname=findViewById(R.id.shopname);

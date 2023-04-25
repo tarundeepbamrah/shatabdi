@@ -43,6 +43,7 @@
                     />
                 <TextView
                     android:id="@+id/dealer_name"
+                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Deaker Name"
@@ -70,6 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Phone"
+                    android:textColor="@color/black"
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="5dp"
 
@@ -93,6 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="City"
+                    android:textColor="@color/black"
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="5dp"
 
@@ -117,6 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Area"
+                    android:textColor="@color/black"
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="5dp"
 

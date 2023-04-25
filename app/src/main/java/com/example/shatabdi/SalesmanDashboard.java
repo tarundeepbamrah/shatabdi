@@ -1,6 +1,7 @@
 package com.example.shatabdi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -59,6 +60,7 @@ public class SalesmanDashboard extends AppCompatActivity {
         setContentView(R.layout.activity_salesman_dashboard);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         finddealers=findViewById(R.id.finddealers);
         logout=findViewById(R.id.logout);
         autoCompleteTextView=findViewById(R.id.auto_complete_txt_city);

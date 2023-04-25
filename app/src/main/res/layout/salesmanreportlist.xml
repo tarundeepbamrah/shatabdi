@@ -41,6 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Phone"
+                android:textColor="@color/black"
                 android:layout_marginEnd="25dp"
                 android:layout_marginStart="5dp"
 
@@ -53,12 +54,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:orientation="horizontal">a
+            android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/dealersvisited"
                 android:layout_width="130dp"
                 android:layout_height="35dp"
+                android:textColor="@color/black"
                 android:layout_marginStart="20dp"
                 android:layout_gravity="left"
                 android:background="@drawable/round_back_dark_blue"
@@ -71,6 +73,7 @@
                 android:id="@+id/attendance"
                 android:layout_width="130dp"
                 android:layout_height="35dp"
+                android:textColor="@color/black"
                 android:background="@drawable/round_back_dark_blue"
                 android:textAllCaps="false"
                 android:layout_gravity="right"

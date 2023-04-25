@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
@@ -25,6 +26,7 @@ public class ManagerDashboard extends AppCompatActivity {
         setContentView(R.layout.activity_manager_dashboard);
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.blue));
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         salesmanreport= findViewById(R.id.salesmanreport);
         logout=findViewById(R.id.logout);
         dealerreport= findViewById(R.id.dealerreport);

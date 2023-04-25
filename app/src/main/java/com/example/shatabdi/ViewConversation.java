@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,6 +40,7 @@ public class ViewConversation extends AppCompatActivity {
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_view_conversation);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.blue));
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         sname=getIntent().getExtras().getString("sname");
         dealer=getIntent().getExtras().getString("dealer");
         date=getIntent().getExtras().getString("date");

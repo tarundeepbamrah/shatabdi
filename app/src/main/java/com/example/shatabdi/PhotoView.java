@@ -2,6 +2,7 @@ package com.example.shatabdi;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 
 import android.app.AlertDialog;
@@ -50,7 +51,9 @@ public class PhotoView extends AppCompatActivity {
         overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         setContentView(R.layout.activity_photo_view);
         photo = findViewById(R.id.photo);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.blue));
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         conversation=getIntent().getExtras().getString("conversation");
         dealer=getIntent().getExtras().getString("dealer");
         sname=getIntent().getExtras().getString("sname");

@@ -48,6 +48,7 @@
                     android:id="@+id/salesmanphone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="Phone"
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="5dp"
@@ -74,6 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Date"
+                    android:textColor="@color/black"
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="5dp"
 

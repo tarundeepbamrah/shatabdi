@@ -2,6 +2,7 @@ package com.example.shatabdi;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -96,6 +97,7 @@ public class Conversation extends AppCompatActivity {
         setContentView(R.layout.activity_conversation);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         mStorageRef= FirebaseStorage.getInstance().getReference();
         attendence=findViewById(R.id.attendence);
         sendreport= findViewById(R.id.sendreport);
