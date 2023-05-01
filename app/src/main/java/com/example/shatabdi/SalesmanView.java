@@ -111,6 +111,7 @@ public class SalesmanView extends AppCompatActivity {
                             public void onClick(View view) {
                                 snameresult=searchsname.getText().toString();
                                 if(!snameresult.equals("")){
+                                    dialog.show();
                                     searchresult(snameresult,sqld1,sqld2);
                                 }
                             }

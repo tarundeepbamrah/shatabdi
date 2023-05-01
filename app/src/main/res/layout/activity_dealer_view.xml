@@ -58,7 +58,7 @@
         android:layout_marginBottom="10dp"
         >
         <EditText
-            android:id="@+id/searchsname"
+            android:id="@+id/searchdealer"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:background="@drawable/edittextbg"

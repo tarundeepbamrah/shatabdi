@@ -108,6 +108,7 @@ public class DealerView extends AppCompatActivity {
                             public void onClick(View view) {
                                 dealerresult=searchdealer.getText().toString();
                                 if(!dealerresult.equals("")){
+                                    dialog.show();
                                     searchresult(dealerresult,sqld1,sqld2);
                                 }
                             }

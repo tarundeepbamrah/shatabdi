@@ -111,7 +111,7 @@ public class PhotoViewWithSalesman extends AppCompatActivity {
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(PhotoViewWithSalesman.this, "Failed to get Photo", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(PhotoViewWithSalesman.this, "No Photo Uploaded", Toast.LENGTH_SHORT).show();
                                         dialog1.dismiss();
                                     }
                                 });

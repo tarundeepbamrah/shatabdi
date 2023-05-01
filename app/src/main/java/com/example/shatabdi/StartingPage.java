@@ -16,8 +16,6 @@ public class StartingPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -25,6 +23,7 @@ public class StartingPage extends AppCompatActivity {
         int ui= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         hide.setSystemUiVisibility(ui);
         setContentView(R.layout.activity_starting_page);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.white));
 
         Thread thread= new Thread() {
             public void run() {
