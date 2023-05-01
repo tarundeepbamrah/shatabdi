@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,7 +40,9 @@ public class DealerView extends AppCompatActivity {
     ApiInterface apiInterface;
     AlertDialog dialog;
     TextView nodealersvisited;
-    AppCompatButton back;
+    AppCompatButton back,search;
+    EditText searchdealer;
+    String dealerresult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,9 @@ public class DealerView extends AppCompatActivity {
         mPickDateButton=findViewById(R.id.selectdate);
         nodealersvisited=findViewById(R.id.nodealersvisited);
         back= findViewById(R.id.back);
+        search=findViewById(R.id.search);
+        searchdealer=findViewById(R.id.searchdealer);
+        search.setEnabled(false);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +102,16 @@ public class DealerView extends AppCompatActivity {
                         },3000);
 
                         getresult(sqld1,sqld2);
+                        search.setEnabled(true);
+                        search.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dealerresult=searchdealer.getText().toString();
+                                if(!dealerresult.equals("")){
+                                    searchresult(dealerresult,sqld1,sqld2);
+                                }
+                            }
+                        });
 
                     }
                 });
@@ -146,6 +162,43 @@ public class DealerView extends AppCompatActivity {
         });
 
     }
+
+    private void searchresult(String dealer,String sdate,String tdate) {
+        apiInterface.readDealerSearchReport(dealer,sdate,tdate).enqueue(new Callback<GetResponse2>() {
+            @Override
+            public void onResponse(Call<GetResponse2> call, Response<GetResponse2> response) {
+                try{
+                    if(response!=null){
+                        if(response.body().getStatus().equals("1")){
+                            dialog.dismiss();
+                            //adapter.notifyDataSetChanged();
+                            nodealersvisited.setText("");
+                            setadapter(response.body().getData(),sdate,tdate);
+                        }
+                        else{
+                            //Toast.makeText(SalesmanView.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            nodealersvisited.setText("NO DEALER FOUND IN THIS DATE RANGE");
+                            recyclerView.setAdapter(null);
+                            //adapter.notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                    }
+                }
+                catch(Exception e){
+                    Log.e("Exception",e.getLocalizedMessage());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GetResponse2> call, Throwable t) {
+                Log.e("Failure",t.getLocalizedMessage());
+
+            }
+        });
+
+    }
+
     @Override
     public void onBackPressed() {
         Intent i = new Intent(DealerView.this, ManagerDashboard.class);

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,7 +40,9 @@ public class SalesmanView extends AppCompatActivity {
     ApiInterface apiInterface;
     AlertDialog dialog;
     TextView nodealersvisited;
-    AppCompatButton back;
+    AppCompatButton back,search;
+    EditText searchsname;
+    String snameresult;
 
 
     @Override
@@ -53,6 +56,9 @@ public class SalesmanView extends AppCompatActivity {
         mPickDateButton=findViewById(R.id.selectdate);
         nodealersvisited=findViewById(R.id.nodealersvisited);
         back= findViewById(R.id.back);
+        search= findViewById(R.id.search);
+        searchsname= findViewById(R.id.searchsname);
+        search.setEnabled(false);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,13 +105,21 @@ public class SalesmanView extends AppCompatActivity {
                         },3000);
 
                         getresult(sqld1,sqld2);
-
+                        search.setEnabled(true);
+                        search.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                snameresult=searchsname.getText().toString();
+                                if(!snameresult.equals("")){
+                                    searchresult(snameresult,sqld1,sqld2);
+                                }
+                            }
+                        });
                     }
                 });
                 materialDatePicker.show(getSupportFragmentManager(),"MATERIAL_DATE_PICKER");
             }
         });
-
 
     }
     private void setadapter(List<ModelSalesmanReport> model,String sdate,String tdate) {
@@ -118,6 +132,42 @@ public class SalesmanView extends AppCompatActivity {
 
     private void getresult(String sdate,String tdate) {
         apiInterface.getSalesmanData(sdate,tdate).enqueue(new Callback<GetSalesmanResponse>() {
+            @Override
+            public void onResponse(Call<GetSalesmanResponse> call, Response<GetSalesmanResponse> response) {
+                try{
+                    if(response!=null){
+                        if(response.body().getStatus().equals("1")){
+                            dialog.dismiss();
+                            //adapter.notifyDataSetChanged();
+                            nodealersvisited.setText("");
+                            setadapter(response.body().getData(),sdate,tdate);
+                        }
+                        else{
+                            //Toast.makeText(SalesmanView.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            nodealersvisited.setText("NO SALESMAN FOUND IN THIS DATE RANGE");
+                            recyclerView.setAdapter(null);
+                            //adapter.notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                    }
+                }
+                catch(Exception e){
+                    Log.e("Exception",e.getLocalizedMessage());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GetSalesmanResponse> call, Throwable t) {
+                Log.e("Failure",t.getLocalizedMessage());
+
+            }
+        });
+
+    }
+
+    private void searchresult(String sname,String sdate,String tdate) {
+        apiInterface.getSalesmanSearchData(sname,sdate,tdate).enqueue(new Callback<GetSalesmanResponse>() {
             @Override
             public void onResponse(Call<GetSalesmanResponse> call, Response<GetSalesmanResponse> response) {
                 try{

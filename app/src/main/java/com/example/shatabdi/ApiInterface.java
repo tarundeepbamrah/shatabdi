@@ -36,6 +36,9 @@ public interface ApiInterface {
     @POST("u428418343_readsalesman.php")
     Call<GetSalesmanResponse> getSalesmanData(@Field("sdate") String sdate,@Field("tdate") String tdate);
     @FormUrlEncoded
+    @POST("u428418343_readsalesmansearch.php")
+    Call<GetSalesmanResponse> getSalesmanSearchData(@Field("sname") String sname,@Field("sdate") String sdate,@Field("tdate") String tdate);
+    @FormUrlEncoded
     @POST("u428418343_getdealersvisited.php")
     Call<GetResponse2> readDealersVisited(@Field("salesman_name") String sname,@Field("sdate") String sdate,@Field("tdate") String tdate);
     @FormUrlEncoded
@@ -53,6 +56,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("u428418343_readdealerreport.php")
     Call<GetResponse2> readDealerReport(@Field("sdate") String sdate,@Field("tdate") String tdate);
+    @FormUrlEncoded
+    @POST("u428418343_readdealersearchreport.php")
+    Call<GetResponse2> readDealerSearchReport(@Field("dealer") String dealer,@Field("sdate") String sdate,@Field("tdate") String tdate);
 
     @FormUrlEncoded
     @POST("u428418343_getsalesmanvisited.php")
