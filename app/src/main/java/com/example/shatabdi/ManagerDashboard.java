@@ -18,6 +18,8 @@ import androidx.core.content.ContextCompat;
 public class ManagerDashboard extends AppCompatActivity {
     AppCompatButton salesmanreport,dealerreport,locationreport;
     TextView logout;
+    //String name;
+    //TextView mname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +33,14 @@ public class ManagerDashboard extends AppCompatActivity {
         logout=findViewById(R.id.logout);
         dealerreport= findViewById(R.id.dealerreport);
         locationreport= findViewById(R.id.locationreport);
+        //mname=findViewById(R.id.mname);
+        //name=getIntent().getExtras().getString("name");
+        //mname.setText(name);
         salesmanreport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i= new Intent(ManagerDashboard.this,SalesmanView.class);
+                //i.putExtra("name",name);
                 startActivity(i);
             }
         });
@@ -88,6 +94,7 @@ public class ManagerDashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i= new Intent(ManagerDashboard.this,DealerView.class);
+                //i.putExtra("name",name);
                 startActivity(i);
             }
         });
@@ -95,6 +102,7 @@ public class ManagerDashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i= new Intent(ManagerDashboard.this,LocationReport.class);
+                //i.putExtra("name",name);
                 startActivity(i);
             }
         });

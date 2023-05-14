@@ -59,11 +59,13 @@ public class SalesmanView extends AppCompatActivity {
         search= findViewById(R.id.search);
         searchsname= findViewById(R.id.searchsname);
         search.setEnabled(false);
+        //name=getIntent().getExtras().getString("name");
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(SalesmanView.this, ManagerDashboard.class);
+                //i.putExtra("name",name);
                 startActivity(i);
             }
         });
@@ -205,6 +207,7 @@ public class SalesmanView extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent i = new Intent(SalesmanView.this, ManagerDashboard.class);
+        //i.putExtra("name",name);
         startActivity(i);
     }
 }

@@ -17,7 +17,7 @@ public class ApiClient {
 
             Gson gson = new GsonBuilder().create();
 
-            RETROFIT = new Retrofit.Builder().baseUrl("https://shatabdiply.com/ShatabdiAppData/")
+            RETROFIT = new Retrofit.Builder().baseUrl("https://rankkeywords.in/ShatabdiAppData/")
                     .client(okHttpClient).addConverterFactory(GsonConverterFactory.create(gson)).build();
 
         }

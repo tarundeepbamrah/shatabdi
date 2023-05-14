@@ -49,6 +49,7 @@ public class AdapterSalesmanReport extends RecyclerView.Adapter<AdapterSalesmanR
             @Override
             public void onClick(View view) {
                 Intent j = new Intent(context, DealersVisited.class);
+                //j.putExtra("name",name);
                 j.putExtra("sname",modelList.get(position).getSalesman_name());
                 j.putExtra("sdate",sdate);
                 j.putExtra("tdate",tdate);

@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -181,5 +182,15 @@ public class Signin extends AppCompatActivity {
         int resultCam= ActivityCompat.checkSelfPermission(this,CAMERA);
         int resultLoc= ActivityCompat.checkSelfPermission(this,ACCESS_FINE_LOCATION);
         return resultCam==PackageManager.PERMISSION_GRANTED && resultLoc==PackageManager.PERMISSION_GRANTED;
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser mFirebaseUser=mAuth.getCurrentUser();
+        if(mFirebaseUser!=null){
+            Toast.makeText(this, mFirebaseUser.getPhoneNumber(), Toast.LENGTH_SHORT).show();
+        }else{
+
+        }
     }
 }
