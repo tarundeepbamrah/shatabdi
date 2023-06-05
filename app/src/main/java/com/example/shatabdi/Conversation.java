@@ -8,9 +8,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -36,6 +38,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,12 +58,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -83,12 +93,14 @@ public class Conversation extends AppCompatActivity {
     Date currentdate= Calendar.getInstance().getTime();
     SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     SimpleDateFormat datetime=new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
-    String finaldate,locationlink,currentdatetime;
+    String finaldate,locationlink,currentdatetime,todaydate;
     TextView logout,confirmconversation,username;
-    EditText conversationsummary;
+    EditText conversationsummary,dateofvisit;
     FusedLocationProviderClient mFusedLocationClient;
     ApiInterface apiInterface;
     AlertDialog dialog2;
+    Uri filepath;
+    Bitmap bitmap;
     int PERMISSION_ID = 44;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +115,7 @@ public class Conversation extends AppCompatActivity {
         sendreport= findViewById(R.id.sendreport);
         myimage= findViewById(R.id.myimage);
         camera= findViewById(R.id.camera);
+        dateofvisit=findViewById(R.id.dateofvisit);
         conversationsummary=findViewById(R.id.conversation);
         sendreport.setEnabled(false);
         sendreport.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.disabled_button_bg));
@@ -113,12 +126,39 @@ public class Conversation extends AppCompatActivity {
         name=getIntent().getExtras().getString("name");
         phone=getIntent().getExtras().getString("phone");
         position=getIntent().getExtras().getString("position");
-        finaldate=df.format(currentdate);
+        todaydate=df.format(currentdate);
+        dateofvisit.setText(todaydate);
+        finaldate=dateofvisit.getText().toString();
         username=findViewById(R.id.username);
         username.setText(name);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
+
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener date=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(Calendar.YEAR,year);
+                calendar.set(Calendar.MONTH,month);
+                calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                updateCalendar();
+            }
+            private void updateCalendar() {
+                String Format="yyyy/MM/dd";
+                SimpleDateFormat sdf=new SimpleDateFormat(Format, Locale.US);
+                //String
+                dateofvisit.setText(sdf.format(calendar.getTime()));
+                finaldate=dateofvisit.getText().toString();
+            }
+        };
+
+        dateofvisit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(Conversation.this,date,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         conversationsummary.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -132,7 +172,10 @@ public class Conversation extends AppCompatActivity {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadimage();
+                //uploadimage();
+                uploadgalleryimage();
+
+
             }
         });
 
@@ -163,6 +206,7 @@ public class Conversation extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                FirebaseAuth.getInstance().signOut();
                                 dialog1.dismiss();
                                 Intent i= new Intent(Conversation.this,Signin.class);
                                 startActivity(i);
@@ -208,7 +252,7 @@ public class Conversation extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                if(attendence.isChecked()) {
+                if(attendence.isChecked() && !dateofvisit.getText().toString().equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(Conversation.this);
                     View view1 = LayoutInflater.from(Conversation.this).inflate(R.layout.conversationdialog, null);
                     cancel = view1.findViewById(R.id.cancel);
@@ -293,6 +337,28 @@ public class Conversation extends AppCompatActivity {
             }
         });
     }
+
+    private void uploadgalleryimage() {
+        Dexter.withActivity(Conversation.this).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                Intent intent= new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent,"Please Select Image"),1);
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                permissionToken.continuePermissionRequest();
+            }
+        }).check();
+    }
+
     @SuppressLint("MissingPermission")
     private void getLastLocation() {
         if (checkPermissions()) {
@@ -395,7 +461,8 @@ public class Conversation extends AppCompatActivity {
                     if(response!=null){
 
                         if(response.body().getStatus().equals("1")){
-                            uploadtofirebase(bb);
+                            //uploadtofirebase(bb);
+                            uploadimagetofirebase(filepath);
                             dialog2.dismiss();
                         }
                         else{
@@ -429,11 +496,23 @@ public class Conversation extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-        if(resultCode==Activity.RESULT_OK){
+        if(resultCode==RESULT_OK){
             if(requestCode==101){
                 onCaptureImageResult(data);
                 //File f= new File(currentPhotoPath);
 
+            }
+            else if(requestCode==1){
+                filepath=data.getData();
+                try{
+                    InputStream inputStream=getContentResolver().openInputStream(filepath);
+                    bitmap=BitmapFactory.decodeStream(inputStream);
+                    camera.setBackground(new BitmapDrawable(getResources(),bitmap));
+                    imagecaptured=true;
+
+                }catch (Exception e){
+                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
@@ -452,6 +531,21 @@ public class Conversation extends AppCompatActivity {
     private void uploadtofirebase(byte[] bb) {
         StorageReference sr=mStorageRef.child("images/"+phone+"_"+currentdatetime+".jpg");
         sr.putBytes(bb).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                if(dialog2.isShowing()){
+                    dialog2.dismiss();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
+    }
+    private void uploadimagetofirebase(Uri filepath) {
+        StorageReference sr=mStorageRef.child("images/"+phone+"_"+currentdatetime+".jpg");
+        sr.putFile(filepath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 if(dialog2.isShowing()){

@@ -99,21 +99,21 @@
         >
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/salesmanreport"
+            android:id="@+id/trackuserlocation"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:background="@drawable/button"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:paddingTop="30dp"
-            android:text="Salesman Report"
+            android:text="Track Salesman"
             android:textColor="@color/blue"
             android:layout_marginTop="8dp"
             android:textSize="12sp"
-            android:drawableTop="@drawable/salesman"
+            android:drawableTop="@drawable/tracklocation"
             />
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/dealerreport"
+            android:id="@+id/salesmanreport"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_marginTop="8dp"
@@ -121,11 +121,12 @@
             android:layout_marginBottom="10dp"
             android:layout_marginStart="10dp"
             android:paddingTop="30dp"
-            android:text="Dealer Report"
+            android:text="Salesman Report"
             android:textColor="@color/blue"
             android:textSize="12sp"
-            android:drawableTop="@drawable/dealer"
+            android:drawableTop="@drawable/salesman"
             />
+
 
     </LinearLayout>
 
@@ -136,11 +137,26 @@
         android:gravity="center"
         >
 
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dealerreport"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:background="@drawable/button"
+            android:paddingTop="30dp"
+            android:text="Dealer Report"
+            android:textColor="@color/blue"
+            android:layout_marginEnd="10dp"
+            android:textSize="12sp"
+            android:drawableTop="@drawable/dealer"
+            />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/locationreport"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:background="@drawable/button"
+            android:layout_marginStart="10dp"
             android:paddingTop="30dp"
             android:text="Location"
             android:textColor="@color/blue"

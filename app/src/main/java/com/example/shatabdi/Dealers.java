@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.TextView;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -109,6 +111,7 @@ public class Dealers extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                FirebaseAuth.getInstance().signOut();
                                 dialog1.dismiss();
                                 Intent i = new Intent(Dealers.this, Signin.class);
                                 startActivity(i);

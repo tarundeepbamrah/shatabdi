@@ -42,7 +42,7 @@ public class SalesmanView extends AppCompatActivity {
     TextView nodealersvisited;
     AppCompatButton back,search;
     EditText searchsname;
-    String snameresult;
+    String snameresult,name;
 
 
     @Override

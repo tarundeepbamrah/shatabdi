@@ -39,6 +39,7 @@ public class Signin extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference dbref;
     String name,phone,position,checkphone;
+    //FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,57 @@ public class Signin extends AppCompatActivity {
 
         if(!checkPer()){
             ActivityCompat.requestPermissions(Signin.this, new String[]{CAMERA, ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+        }
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            String tempstring=FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            String userstring=tempstring.substring(0,10);
+            AlertDialog dialog;
+            AlertDialog.Builder builder= new AlertDialog.Builder(Signin.this);
+            View view1 = LayoutInflater.from(Signin.this).inflate(R.layout.loadingdialog,null);
+            builder.setView(view1);
+            dialog=builder.create();
+            dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
+            dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbackground));
+            dialog.setCancelable(false);
+            dialog.getWindow().setGravity(Gravity.CENTER);
+            dialog.show();
+
+            dbref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+                        if(dataSnapshot.child("phone").getValue().toString().equals(userstring)){
+                            name = dataSnapshot.child("name").getValue().toString();
+                            phone = dataSnapshot.child("phone").getValue().toString();
+                            position = dataSnapshot.child("position").getValue().toString();
+                        }
+                    }
+                    if (position.equals("Salesman")){
+                        dialog.dismiss();
+                        Intent i= new Intent(Signin.this,SalesmanDashboard.class);
+                        i.putExtra("name",name);
+                        i.putExtra("phone",phone);
+                        i.putExtra("position",position);
+                        startActivity(i);
+                    } else if (position.equals("Manager")) {
+                        dialog.dismiss();
+                        Intent i= new Intent(Signin.this,ManagerDashboard.class);
+                        i.putExtra("name",name);
+                        i.putExtra("phone",phone);
+                        i.putExtra("position",position);
+                        startActivity(i);
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         }
 
         login.setOnClickListener(new View.OnClickListener() {

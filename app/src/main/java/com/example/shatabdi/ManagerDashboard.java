@@ -9,14 +9,18 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class ManagerDashboard extends AppCompatActivity {
-    AppCompatButton salesmanreport,dealerreport,locationreport;
+    AppCompatButton salesmanreport,dealerreport,locationreport,trackuserlocation;
     TextView logout;
     //String name;
     //TextView mname;
@@ -33,6 +37,7 @@ public class ManagerDashboard extends AppCompatActivity {
         logout=findViewById(R.id.logout);
         dealerreport= findViewById(R.id.dealerreport);
         locationreport= findViewById(R.id.locationreport);
+        trackuserlocation= findViewById(R.id.trackuserlocation);
         //mname=findViewById(R.id.mname);
         //name=getIntent().getExtras().getString("name");
         //mname.setText(name);
@@ -40,6 +45,15 @@ public class ManagerDashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i= new Intent(ManagerDashboard.this,SalesmanView.class);
+                //i.putExtra("name",name);
+                startActivity(i);
+            }
+        });
+
+        trackuserlocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i= new Intent(ManagerDashboard.this,TrackSalesman.class);
                 //i.putExtra("name",name);
                 startActivity(i);
             }
@@ -70,6 +84,7 @@ public class ManagerDashboard extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                FirebaseAuth.getInstance().signOut();
                                 dialog1.dismiss();
                                 Intent i= new Intent(ManagerDashboard.this,Signin.class);
                                 startActivity(i);
@@ -111,7 +126,7 @@ public class ManagerDashboard extends AppCompatActivity {
     public void onBackPressed(){
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setCancelable(false);
-        builder.setMessage("Do you want to Logout and Exit?");
+        builder.setMessage("Do you want to Exit?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

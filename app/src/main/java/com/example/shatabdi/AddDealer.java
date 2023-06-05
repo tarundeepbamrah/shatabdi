@@ -80,6 +80,7 @@ public class AddDealer extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                FirebaseAuth.getInstance().signOut();
                                 dialog1.dismiss();
                                 Intent i= new Intent(AddDealer.this,Signin.class);
                                 startActivity(i);

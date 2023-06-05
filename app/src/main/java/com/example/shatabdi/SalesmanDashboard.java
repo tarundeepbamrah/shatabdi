@@ -117,6 +117,7 @@ public class SalesmanDashboard extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                FirebaseAuth.getInstance().signOut();
                                 dialog1.dismiss();
                                 Intent i= new Intent(SalesmanDashboard.this,Signin.class);
                                 startActivity(i);
@@ -252,7 +253,7 @@ public class SalesmanDashboard extends AppCompatActivity {
     public void onBackPressed(){
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setCancelable(false);
-        builder.setMessage("Do you want to Logout and Exit?");
+        builder.setMessage("Do you want to Exit?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
