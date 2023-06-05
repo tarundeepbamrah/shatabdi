@@ -235,14 +235,5 @@ public class Signin extends AppCompatActivity {
         int resultLoc= ActivityCompat.checkSelfPermission(this,ACCESS_FINE_LOCATION);
         return resultCam==PackageManager.PERMISSION_GRANTED && resultLoc==PackageManager.PERMISSION_GRANTED;
     }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser mFirebaseUser=mAuth.getCurrentUser();
-        if(mFirebaseUser!=null){
-            Toast.makeText(this, mFirebaseUser.getPhoneNumber(), Toast.LENGTH_SHORT).show();
-        }else{
 
-        }
-    }
 }
