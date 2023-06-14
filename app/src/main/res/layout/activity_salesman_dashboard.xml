@@ -9,6 +9,15 @@
     android:background="@drawable/background"
     tools:context=".SalesmanDashboard">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
 
     <ImageView
         android:layout_width="wrap_content"
@@ -70,6 +79,8 @@
             />
 
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -138,8 +149,6 @@
 
 </LinearLayout>
 
-
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/finddealers"
         android:layout_width="match_parent"
@@ -154,4 +163,23 @@
         />
 
 
+</LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/history"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/camerabutton"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:drawableStart="@drawable/historywhite"
+        android:padding="12dp"
+
+        />
+
+</FrameLayout>
 </LinearLayout>

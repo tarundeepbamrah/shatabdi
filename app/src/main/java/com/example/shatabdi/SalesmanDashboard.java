@@ -43,7 +43,7 @@ import retrofit2.Retrofit;
 
 public class SalesmanDashboard extends AppCompatActivity {
 
-    AppCompatButton finddealers;
+    AppCompatButton finddealers,history;
     String city,area,name,phone,position,selectcity;
     ApiInterface apiInterface;
     TextView logout,username;
@@ -66,6 +66,7 @@ public class SalesmanDashboard extends AppCompatActivity {
         autoCompleteTextView=findViewById(R.id.auto_complete_txt_city);
         autoCompleteTextView2=findViewById(R.id.auto_complete_txt_area);
         username=findViewById(R.id.username);
+        history=findViewById(R.id.history);
         name=getIntent().getExtras().getString("name");
         phone=getIntent().getExtras().getString("phone");
         position=getIntent().getExtras().getString("position");
@@ -91,6 +92,17 @@ public class SalesmanDashboard extends AppCompatActivity {
 
         initialization();
         getresult();
+
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i= new Intent(SalesmanDashboard.this,History.class);
+                i.putExtra("name",name);
+                i.putExtra("phone",phone);
+                i.putExtra("position",position);
+                startActivity(i);
+            }
+        });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

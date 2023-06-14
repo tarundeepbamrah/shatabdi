@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -19,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Shatabdi"
         tools:targetApi="31">
+        <activity
+            android:name=".HistoryConversation"
+            android:exported="false" />
+        <activity
+            android:name=".History"
+            android:exported="false" />
         <activity
             android:name=".LocationHistory"
             android:exported="false" />

@@ -19,7 +19,7 @@
 
             <TextView
                 android:id="@+id/dealer"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="Name: "
                 android:layout_marginHorizontal="25dp"
@@ -43,7 +43,7 @@
                     />
                 <TextView
                     android:id="@+id/dealer_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="210dp"
                     android:layout_height="wrap_content"
                     android:text="Deaker Name"
                     android:textColor="@color/black"

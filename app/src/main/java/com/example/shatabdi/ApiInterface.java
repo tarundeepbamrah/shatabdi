@@ -76,5 +76,18 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("u428418343_getSalesmanPhotoLoc.php")
     Call<GetPhotoResponse> readSalesmanPhotoLoc(@Field("salesman_name") String sname,@Field("date") String date,@Field("conversation") String conversation);
+    @FormUrlEncoded
+    @POST("u428418343_history.php")
+    Call<GetResponse2> history(@Field("sname") String name);
+    @FormUrlEncoded
+    @POST("u428418343_historywithdate.php")
+    Call<GetResponse2> historywithdate(@Field("sname") String name,@Field("date") String date);
+
+    @FormUrlEncoded
+    @POST("u428418343_historywithdealer.php")
+    Call<GetResponse2> historywithdealer(@Field("sname") String name,@Field("dealer") String dealer);
+    @FormUrlEncoded
+    @POST("u428418343_historywithboth.php")
+    Call<GetResponse2> historywithboth(@Field("sname") String name,@Field("date") String date,@Field("dealer") String dealer);
 
 }

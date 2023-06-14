@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="10dp"
+    android:paddingTop="10dp"
+    android:background="@color/white"
+    >
+
+    <LinearLayout
+        android:id="@+id/bg"
+        android:background="@drawable/dealerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="5dp"
+        android:padding="10dp"
+        >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+
+                >
+                <TextView
+                    android:id="@+id/conversation"
+                    android:layout_width="355dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Conversation"
+                    android:scrollHorizontally="false"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    />
+
+            </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>
